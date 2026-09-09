@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>TIE-OUT · Chart-of-accounts mapping for roll-ups · Javendean Naipaul</title>
+<meta name="description" content="Chart-of-accounts mapping for roll-ups, with an independent subtotal oracle that catches a mapping which reconciles to the cent and is still wrong by $309,245.88, and an evaluation harness that argues against its own numbers.">
+<link rel="stylesheet" href="../../style.css">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Javendean Naipaul">
+<meta property="og:title" content="TIE-OUT — chart-of-accounts mapping for roll-ups">
+<meta property="og:description" content="A mapping that reconciles to the cent and is still wrong by $309,245.88, and the independent oracle that catches it.">
+<meta name="twitter:card" content="summary">
+</head>
+<body>
+<main class="sheet">
+
+  <nav class="sitenav" aria-label="Main">
+    <a href="../../">Javendean Naipaul</a>
+    <span>
+      <a href="./" aria-current="page">TIE-OUT</a>
+      <a href="../verity/">Verity</a>
+      <a href="../lcc/">LCC</a>
+      <a href="../../about/">About</a>
+    </span>
+  </nav>
+
+  <header>
+    <h1>TIE-OUT</h1>
+    <p class="role">Chart-of-accounts mapping for roll-ups, and a close pack the system will refuse
+    to publish if it cannot stand behind it.</p>
+    <div class="meta">
+      <span><b>Stack</b> Python · DuckDB · dbt · Fellegi-Sunter record linkage</span>
+      <span><b>Size</b> ~3,200 lines in tieout/ · 12 modules</span>
+      <span><b>Tests</b> 124 passing in 47.95s (run 2026-09-09)</span>
+      <span><b>Repo</b> private</span>
+    </div>
+  </header>
+
+  <p class="lede">A roll-up buys companies, and each one arrives with its own chart of accounts.
+  Consolidation forces those charts onto one group chart, and that mapping is where a close pack
+  goes wrong quietly. The interesting failure is not the one that breaks a total. It is the one
+  that <b>reconciles to the cent and is still wrong.</b></p>
+
+  <section>
+  <h2 id="problem-h">1 · The problem: two charts that disagree, one consolidated number</h2>
+  <p>Every acquired entity keeps its own account numbers, its own account names, and its own view of
+  what belongs in cost of sales. None of that is an error. It is what a chart of accounts is for.
+  Consolidation still has to produce one set of captions, so somebody decides that this entity's
+  account 5000 belongs under that group account, account by account, entity by entity, every
+  period.</p>
+  <p>The checks that usually guard this are conservation (every source dollar lands somewhere in the
+  group) and sign preservation (nothing flipped across the ledger). Both are necessary. Neither
+  looks at meaning. TIE-OUT exists because the gap between those two facts is large enough to hold a
+  six-figure misstatement, and it makes that claim in a form that can be run rather than argued.</p>
+  <p class="stack">tieout/ modules: accounts · charts · check · confidence · export · generate ·
+  harness · ledger · match · review · similarity · truth</p>
+  </section>
+
+  <section>
+  <h2 id="claim-h">2 · The claim it exists to disprove</h2>
+  <div class="hero">
+    <h3>If every source dollar lands in the group and nothing crossed the ledger, the mapping is correct.</h3>
+    <p>That claim is false, and the disproof ships as a passing test rather than a paragraph.
+    <code>scripts/prove_tests_fire.py</code> injects one permutation into a clean run: entity E1
+    account 5000, <b>COGS - Materials</b>, mapped to group account G-6100, <b>Rent and
+    Occupancy</b>. Then it asserts which checks must pass and which single check must fail. The
+    script name is the point: the tests are themselves under test, because a check that cannot be
+    shown to fire is not evidence.</p>
+
+    <figure class="ev">
+      <div class="term">
+        <div class="term-bar"><span class="term-title">python scripts/prove_tests_fire.py</span></div>
+<pre tabindex="0" role="region" aria-label="Terminal output: python scripts/prove_tests_fire.py, scrollable"><span class="dim">Injecting a permutation: E1 5000 'COGS - Materials' -&gt; G-6100 'Rent and Occupancy'.</span>
+
+<span class="w">3. THE DISPROOF -- an arithmetically perfect, semantically wrong mapping</span>
+  <span class="dim">expected: conservation PASSES, sign preservation PASSES, and ONLY the oracle fails.</span>
+
+  <span class="g">OK</span>  expect_table_aggregation_to_equal_other_table   want <span class="g">PASS</span>   got <span class="g">PASS</span>
+  <span class="g">OK</span>  assert_sign_preservation                        want <span class="g">PASS</span>   got <span class="g">PASS</span>
+  <span class="g">OK</span>  assert_subtotal_oracle                          want <span class="r">FAIL</span>   got <span class="r">FAIL</span>
+
+  <span class="y">what the oracle saw, and nothing else could:</span>
+      E1 2026-05 gross_profit: off by <span class="r">-309,245.88</span>
+      E1 2026-06 gross_profit: off by <span class="r">-323,912.13</span>
+      E1 2026-07 gross_profit: off by <span class="r">-206,319.81</span></pre>
+      </div>
+      <figcaption class="cap cap--claim">Both accounts are debit-normal and the row is assigned
+        exactly once, so the entity still ties to the cent. Gross profit for 2026-05 is wrong
+        by <span class="bignum">$309,245.88</span></figcaption>
+    </figure>
+
+    <p>Three periods, three wrong subtotals, and a trial balance that reconciles in all three. The
+    two checks a reviewer would reach for first report green, correctly, because the thing they
+    measure really did not change.</p>
+  </div>
+  </section>
+
+  <section>
+  <h2 id="oracle-h">3 · Why it hides, and why the oracle catches it</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>Why it hides</h3>
+      <p>Both accounts are debit-normal, so no sign flips. The row is assigned exactly once, so no
+      dollar is duplicated or dropped. Every arithmetic invariant a consolidation normally enforces
+      is satisfied, and the entity still ties to the cent.</p>
+      <p>What changed is which caption the dollars report under, and gross profit is the first
+      subtotal that notices. A tighter tolerance cannot find this, because the error is exactly zero
+      in every dimension a tolerance measures.</p>
+    </div>
+    <div class="card">
+      <h3>Why the oracle catches it</h3>
+      <p>The oracle compares reconstructed captions against subtotals <b>the entity itself published
+      from its own chart</b>. That classification was made before any group chart existed, and the
+      mapper never reads it.</p>
+      <p>So the check has an input the thing it is checking cannot influence. That is an
+      <b>independent oracle</b>, not a stricter version of the checks that already passed. It is
+      also the design idea I would carry into any other consolidation problem: find the number
+      somebody already published for their own reasons, and make it the referee.</p>
+    </div>
+  </div>
+  </section>
+
+  <section>
+  <h2 id="harness-h">4 · The harness, and what it says about itself</h2>
+  <p>The disproof shows the system catching a planted error. The harness is the part I would open
+  first in an interview, because it is where the system is least flattering to itself. It reports
+  four things, and two of them are arguments against its own numbers.</p>
+
+  <figure class="ev">
+    <div class="term">
+      <div class="term-bar"><span class="term-title">python -m tieout.harness</span></div>
+<pre tabindex="0" role="region" aria-label="Terminal output: python -m tieout.harness, scrollable"><span class="w">1. HELD-OUT VOCABULARY</span>  <span class="dim">(not graded against the key)</span>
+   8 accounts renamed to synonyms the rules do not cover.
+   stayed silent: <span class="g">8</span>    confidently wrong: <span class="g">0</span>
+   -&gt; <span class="g">PASS</span>: unknown vocabulary produces a question, not a guess.
+
+<span class="w">2. REVIEW BURDEN</span>  <span class="dim">(a count of human interactions; nothing to grade)</span>
+   2026-05:  21 accounts,  <span class="y">21 questions</span>,   0 auto
+   2026-06:  21 accounts,   <span class="g">0 questions</span>,  21 auto
+   2026-07:  23 accounts,   <span class="g">2 questions</span>,  21 auto
+
+<span class="w">4. NAME SIMILARITY, FULL CROSS-PRODUCT</span>  <span class="dim">(nobody picked the sample)</span>
+   ranking AUC, all pairs           0.727   -- above chance
+   TOP-1 accuracy (the operating point)  30/51 = <span class="r">58.8%</span>
+   of the 21 top-1 errors, 8 cross the balance-sheet / P&amp;L line.
+   -&gt; <span class="y">AUC says the feature is fine; top-1 says it is unusable as a selector.</span>
+      Barred by may_propose_destination.
+
+<span class="w">5. AGREEMENT WITH THE ANSWER KEY</span>  <span class="r">(CIRCULAR -- I wrote the charts, rules and key)</span>
+   E1: 23/23 agree | E2: 14/14 agree | E3: 17/17 agree
+   <span class="y">This number measures my consistency with myself. It is not evidence of
+   correctness and must not be quoted as an accuracy figure.</span></pre>
+    </div>
+    <figcaption class="cap">Verbatim harness output. Section 2 shows the system learning: 21 human
+      questions in the first period, 0 in the second, because approved mappings persist. Sections 4
+      and 5 are the system arguing against its own numbers.</figcaption>
+  </figure>
+
+  <h3 class="sub">Section 1: silence is the correct output</h3>
+  <p>Eight accounts are renamed to synonyms the rules do not cover. The system stays silent on all
+  eight and is confidently wrong on none. Coverage was never the target. The target is that
+  unfamiliar vocabulary produces a question and never a guess, because a guess at this layer
+  arrives downstream wearing the same confidence as a rule.</p>
+
+  <h3 class="sub">Section 2: the review burden collapses, 21 questions to 0</h3>
+  <p>In 2026-05 the system asks about all 21 accounts and maps none automatically. In 2026-06, the
+  same 21 accounts, it asks nothing and maps all 21. In 2026-07 there are 23 accounts: 21 already
+  carry an approved decision, so 2 questions.</p>
+  <p>That is the whole economic argument for the tool, and it is a count of human interactions
+  rather than a score. A judgment a controller makes once is not asked again, and the questions that
+  survive are the ones that are genuinely new. It also means the review queue is a leading indicator:
+  if it stops shrinking across periods, something upstream changed.</p>
+
+  <h3 class="sub">Sections 4 and 5: where the system argues against its own numbers</h3>
+  <p>Name similarity scores a <b>ranking AUC of 0.727</b> across the full cross-product, which is
+  above chance and is the number a paper would report. At the operating point where the feature
+  would actually run, <b>top-1 accuracy is 30/51, or 58.8%</b>, and of the 21 top-1 errors, 8 cross
+  the balance-sheet and P&amp;L line. The harness prints its own conclusion: <em>AUC says the feature
+  is fine; top-1 says it is unusable as a selector.</em> The code agrees with the harness. Similarity
+  is barred from <code>may_propose_destination</code>, so it can rank candidates for a human and
+  cannot choose one. Ranking and selection are different jobs, and a metric chosen for the first
+  will happily license the second.</p>
+  <p>Section 5 is the number that would look best on a slide, which is why the harness prints a
+  warning directly under it. Agreement with the answer key is E1 23/23, E2 14/14, E3 17/17, and
+  the system labels it <b>CIRCULAR</b> in its own report, because the charts, the rules and the
+  key all came from the same author. Its words: <em>this number measures my consistency with
+  myself. It is not evidence of correctness and must not be quoted as an accuracy figure.</em>
+  It is not quoted as one here, and it should not be quoted as one anywhere.</p>
+  </section>
+
+  <section>
+  <h2 id="design-h">5 · Design decisions</h2>
+  <p>Three choices that took the longest to settle. Each exists because the obvious version fails
+  quietly, which is the only failure mode this system treats as unacceptable.</p>
+  <div class="scroller" tabindex="0" role="region" aria-label="Design decisions table, scrollable">
+  <table aria-labelledby="design-h">
+    <thead><tr><th scope="col">Decision</th><th scope="col">What the code does</th>
+      <th scope="col">Why</th></tr></thead>
+    <tbody>
+    <tr><th scope="row">Mapping confidence</th>
+      <td>An ordinal provenance label, not a score. The enum raises on <code>+</code>,
+        <code>*</code> and <code>float()</code>.</td>
+      <td>Confidence here records <em>how</em> a mapping was decided, so the average of two
+        provenances is not a weaker claim, it is a meaningless one. Making the arithmetic
+        unrepresentable is cheaper than policing every place a mean could be taken.</td></tr>
+    <tr><th scope="row">Money</th>
+      <td>Integer minor units stored in <code>BIGINT</code>.</td>
+      <td>DuckDB silently drops to binary float on any division. Every check on this page is an
+        equality to the cent, and float turns that into approximate equality. Once a system needs a
+        tolerance, it can no longer tell a representation artefact from a real difference, which is
+        exactly the distinction the oracle depends on.</td></tr>
+    <tr><th scope="row">Normal balance</th>
+      <td>A property of the account, not of the element it rolls up to.</td>
+      <td>Contra accounts break element-derived inference. Deriving the sign from the element is
+        right often enough to pass a demo and wrong on precisely the accounts that exist to carry
+        the opposite sign.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  </section>
+
+  <section>
+  <h2 id="next-h">6 · What I would do differently, and what is next</h2>
+  <p><b>Get charts I did not write.</b> Section 5 already says the honest limit out loud: I authored
+  the charts, the rules and the key, so agreement between them measures consistency and nothing
+  else. The next real test is a chart of accounts from a source I have never seen, mapped against a
+  close pack somebody else signed. Until that run exists, no number here should be read as an
+  accuracy figure, and the harness says so before a reader has to.</p>
+  <p><b>Widen the held-out vocabulary.</b> Eight renamed accounts is a smoke test for the escalation
+  path, not a generalisation claim. It proves the system stays silent when it should. It does not
+  yet say how often it should have stayed silent and did not.</p>
+  <p><b>Leave similarity barred until top-1 earns the release.</b> The feature is not going to be
+  unblocked by a better AUC, because AUC was never the thing in doubt. It gets unblocked when top-1
+  at the operating point is good enough that a wrong first suggestion costs a reviewer less than no
+  suggestion, and when errors stop crossing the balance-sheet and P&amp;L line.</p>
+  <p><b>What I would do earlier next time.</b> The independent oracle I would build the same way on
+  day one. The harness I would build sooner. Labelling a number CIRCULAR on the day it first prints
+  costs nothing; an unlabelled number gets quoted, and then it has to be withdrawn from a room that
+  already believed it.</p>
+  </section>
+
+  <section>
+  <h2>Verified facts</h2>
+  <dl class="facts">
+    <div class="fact"><dt class="n">$309,245.88</dt><dd class="l">2026-05 gross profit error,<br>conservation and sign pass</dd></div>
+    <div class="fact"><dt class="n">21 → 0</dt><dd class="l">human questions,<br>period 1 to period 2</dd></div>
+    <div class="fact"><dt class="n">124</dt><dd class="l">tests passing in 47.95s,<br>run 2026-09-09</dd></div>
+    <div class="fact"><dt class="n">58.8%</dt><dd class="l">top-1 accuracy that<br>barred a feature</dd></div>
+  </dl>
+  </section>
+
+  <footer>
+    <p>Both terminal captures are verbatim output from running the code. The test count and timing
+    were measured on 2026-09-09. The repository is private, so the source is not linkable here;
+    it is available for a live walkthrough. Related evidence:
+    <a href="../verity/">Verity</a>, an intake agent with a bounded correction loop, and
+    <a href="../lcc/">LCC</a>, where consent gates sit on every send path. Fuller context on the
+    <a href="../../">home page</a> and the <a href="../../about/">About page</a>.</p>
+  </footer>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Verity · A CRM intake agent that will not fail silently · Javendean Naipaul</title>
+<meta name="description" content="Unstructured sales notes into schema-validated CRM records, with a bounded correction loop and the uncertainty attached to the record. On messy input every working model in a six-model benchmark scored 0% first-attempt and 100% final.">
+<link rel="stylesheet" href="../../style.css">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Javendean Naipaul">
+<meta property="og:title" content="Verity — CRM intake agent">
+<meta property="og:description" content="Messy sales prose into schema-validated CRM records. Measured: 0% first-attempt to 100% final on messy input across six models.">
+<meta name="twitter:card" content="summary">
+</head>
+<body>
+<main class="sheet">
+
+  <nav class="sitenav" aria-label="Main">
+    <a href="../../">Javendean Naipaul</a>
+    <span>
+      <a href="../tie-out/">TIE-OUT</a>
+      <a href="./" aria-current="page">Verity</a>
+      <a href="../lcc/">LCC</a>
+      <a href="../../about/">About</a>
+    </span>
+  </nav>
+
+  <header>
+    <h1>Verity</h1>
+    <p class="role">A CRM intake agent: unstructured sales notes in, schema-validated records out,
+      with the uncertainty attached to the record instead of lost.</p>
+    <div class="meta">
+      <span><b>Repository</b> emet-crm-pipeline-demo (private)</span>
+      <span><b>Test suite</b> 82 passing in 0.54 s (2026-09-09)</span>
+      <span><b>Stack</b> Python 3.12 · FastAPI · Pydantic 2 · Docker · Kubernetes · HubSpot API v3</span>
+    </div>
+  </header>
+
+  <section aria-label="Key figures">
+  <dl class="facts">
+    <div class="fact"><dt class="n">82</dt><dd class="l">tests passing<br>in 0.54 s</dd></div>
+    <div class="fact"><dt class="n">0% → 100%</dt><dd class="l">messy-input pass rate, working<br>models, first attempt to final</dd></div>
+    <div class="fact"><dt class="n">2</dt><dd class="l">attempts on the captured run,<br>status partial_success</dd></div>
+    <div class="fact"><dt class="n">~1/5.9</dt><dd class="l">scout's cost per success<br>against maverick's</dd></div>
+  </dl>
+  </section>
+
+  <section>
+  <h2>1 · The failure mode this is built against</h2>
+  <p class="lede">A single model call will read a sales note and return a CRM record that is
+    <b>approximately right</b>. Approximately right is the outcome worth designing against, because
+    it does not announce itself.</p>
+  <p>A malformed response is the easy case. It raises, and something retries or pages someone. The
+    expensive case is the response that parses: well-formed JSON, plausible values, a close date
+    shaped like a close date. Nothing raises, so the record is written, and from that moment every
+    consumer treats it as fact. It reaches pipeline reports and forecasts, and by the time someone
+    questions a number, the trail back to the sentence that produced it has gone cold. Failing
+    loudly costs one retry. Failing quietly costs the credibility of every report built on top of
+    the record.</p>
+  <p>So the target here is not a higher extraction score. It is two properties: no value reaches the
+    CRM that the schema has not accepted, and no uncertain value reaches it without carrying a
+    written record of why it is uncertain.</p>
+  </section>
+
+  <section>
+  <h2>2 · How the correction loop works</h2>
+  <p>Extraction is one step. The rest of the loop is what happens when extraction is wrong, which on
+    messy input is the normal case rather than the exception.</p>
+  <ol>
+    <li><b>Extract against a typed contract.</b> The target is a Pydantic 2 model, so the schema is
+      the specification rather than a description of one.</li>
+    <li><b>Validate.</b> Every field is checked against that contract. On the captured run below,
+      five checks fired: email format, numeric amount, stage enum, date, industry enum.</li>
+    <li><b>Convert each failure into a specific, instructional repair message.</b> Not "invalid
+      input". The message names the field, quotes the value that was rejected, and states what an
+      acceptable value looks like. The model is told how to fix one field, not asked to try
+      again.</li>
+    <li><b>Retry, bounded.</b> The repair messages go back with the original note. The attempt
+      ceiling is fixed, so a model that cannot converge costs a known amount rather than an open
+      one: the two failing configurations in the benchmark below average 5.00 attempts rather than
+      looping.</li>
+    <li><b>On exhaustion, return the best result with explicit error flags.</b> Never a silent
+      failure. <code>partial_success</code> is a real status the caller can branch on, and it is
+      what the captured run returns.</li>
+    <li><b>Emit a full audit record.</b> Every attempt, every validation error, every applied
+      correction, with timing. The screenshot below is that record rendered.</li>
+  </ol>
+  </section>
+
+  <section>
+  <h2 id="run-h">3 · A real captured run</h2>
+  <figure class="ev">
+    <div class="shot">
+      <div class="shot-bar"><span class="url">Verity CRM Pipeline · POST /api/v1/intake/process</span></div>
+      <img src="../../img/verity-demo-io.png" alt="Screenshot: the Verity interface after processing an ambiguous sales note. It reports Partial Success, 2 of 2 attempts, 8.4 seconds. Company and Deal cards show confidence 0.50 with warning marks, an ambiguity note about Meridian Corp versus Meridian Solutions, and a deal amount of 42,500 dollars marked as an estimate. The audit trail below lists five validation errors on attempt one and five applied corrections on attempt two, followed by four fields flagged for human review.">
+    </div>
+    <figcaption class="cap">Two attempts, status <code>partial_success</code>, 8,450 ms end to end.
+      Attempt 1 fails five schema checks, one for each field the note left ambiguous: the email is
+      prose, the amount is a phrase, the stage is not in the enum, the close date is a quarter
+      reference, the industry is not a permitted value. Each becomes a targeted repair instruction.
+      Attempt 2 applies five corrections, listed field by field below, and the record arrives
+      <b>flagged rather than silently wrong</b>: the email is set to null because it could not be
+      resolved, the amount is tagged an estimate, and the entity ambiguity is written down. Four
+      fields are flagged for human review. The captured response is replayed from
+      <code>examples/sample_output_with_audit.json</code>; the interface and the data are both
+      real.</figcaption>
+  </figure>
+
+  <h3 class="sub" id="fix-h">Five errors, five corrections</h3>
+  <figure class="ev">
+    <div class="scroller" tabindex="0" role="region" aria-label="Attempt 1 errors and attempt 2 corrections, field by field">
+    <table aria-labelledby="fix-h">
+      <thead><tr>
+        <th scope="col">Field</th>
+        <th scope="col">Attempt 1 (rejected)</th>
+        <th scope="col">Attempt 2 (returned)</th>
+      </tr></thead>
+      <tbody>
+        <tr><th scope="row"><code>email</code></th>
+          <td>invalid email format:<br><code>'jenny at meridian something dot com'</code></td>
+          <td>set to null, with the reason recorded</td></tr>
+        <tr><th scope="row"><code>deal.amount</code></th>
+          <td>not a number:<br><code>'forty, forty-five K'</code></td>
+          <td><code>42500.0</code>, the midpoint, marked an estimate</td></tr>
+        <tr><th scope="row"><code>stage</code></th>
+          <td>invalid stage:<br><code>'early discussions'</code></td>
+          <td><code>qualification</code></td></tr>
+        <tr><th scope="row"><code>date</code></th>
+          <td>invalid date:<br><code>'end of Q2'</code></td>
+          <td><code>2026-06-30</code></td></tr>
+        <tr><th scope="row"><code>industry</code></th>
+          <td>invalid industry:<br><code>'tech'</code></td>
+          <td><code>unknown</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <figcaption class="cap">Values as recorded in the captured audit record; the field names are
+      shortened here. Two of the five corrections are judgements rather than reformattings:
+      <code>42500.0</code> is a midpoint the note never stated, and <code>2026-06-30</code> is a
+      quarter boundary read as a date. Both are the kind of value that is right often enough to be
+      trusted and wrong often enough to matter, which is why
+      neither leaves the pipeline unmarked.</figcaption>
+  </figure>
+  </section>
+
+  <section>
+  <h2 id="unc-h">4 · What the record says about itself</h2>
+  <p>The loop returns a record plus the state of the system's own knowledge about that record. Five
+    fields carry it, and they are part of the schema, not a log line.</p>
+  <figure class="ev">
+    <div class="scroller" tabindex="0" role="region" aria-label="The five uncertainty fields on the returned record">
+    <table aria-labelledby="unc-h">
+      <thead><tr>
+        <th scope="col">Field</th><th scope="col">What it carries</th>
+      </tr></thead>
+      <tbody>
+        <tr><th scope="row"><code>confidence</code></th>
+          <td>A score the reviewer can sort a queue by. The captured run returns 0.50 on the company
+            and deal cards.</td></tr>
+        <tr><th scope="row"><code>requires_human_review</code></th>
+          <td>A flag the caller routes on, so a doubtful record is queued instead of merged. Four
+            fields are flagged on the captured run.</td></tr>
+        <tr><th scope="row"><code>review_reasons</code></th>
+          <td>Why, in specific terms, so the reviewer is not re-deriving the doubt from the source
+            note.</td></tr>
+        <tr><th scope="row"><code>ambiguity_note</code></th>
+          <td>Free text naming the conflict. On this run: "Source text references both 'Meridian
+            Corp' and 'Meridian Solutions'".</td></tr>
+        <tr><th scope="row"><code>amount_is_estimate</code></th>
+          <td>Marks a derived number as derived. 42,500 is the midpoint of a range the note gave in
+            words, not a figure anyone typed.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <figcaption class="cap">A downstream consumer can tell a value that was read from a value that
+      was inferred without opening the source note. That distinction is what makes a partially
+      correct record safe to store.</figcaption>
+  </figure>
+  </section>
+
+  <section>
+  <h2>5 · Six models, nine trials each</h2>
+  <h3 class="sub" id="bench-h">Benchmark: clean / messy / adversarial input, run 2026-03-01</h3>
+  <figure class="ev">
+    <div class="scroller" tabindex="0" role="region" aria-label="Benchmark of six models over nine trials each">
+    <table class="bench" aria-labelledby="bench-h">
+      <thead><tr>
+        <th scope="col">Model</th><th scope="col">First-pass</th><th scope="col">Final pass</th>
+        <th scope="col">Avg attempts</th><th scope="col">Avg latency</th><th scope="col">Cost / success</th>
+      </tr></thead>
+      <tbody>
+        <tr class="best"><th scope="row">llama4-scout</th><td>6/9 &nbsp;67%</td>
+          <td class="hundred">9/9 &nbsp;100%</td><td>1.33</td><td>1,797 ms</td><td>$0.000365</td></tr>
+        <tr><th scope="row">minimax-2.5 (t=0.2)</th><td>5/9 &nbsp;56%</td>
+          <td class="hundred">9/9 &nbsp;100%</td><td>1.44</td><td>10,351 ms</td><td>$0.000668</td></tr>
+        <tr><th scope="row">minimax-2.5 (t=0.0)</th><td>3/9 &nbsp;33%</td>
+          <td class="hundred">9/9 &nbsp;100%</td><td>1.89</td><td>20,196 ms</td><td>$0.000897</td></tr>
+        <tr><th scope="row">llama4-maverick</th><td>3/9 &nbsp;33%</td>
+          <td>8/9 &nbsp;89%</td><td>2.00</td><td>4,099 ms</td><td>$0.002148</td></tr>
+        <tr><th scope="row">gemini3-flash (schema)</th><td class="zero">0/9</td>
+          <td class="zero">0/9</td><td>5.00</td><td>858 ms</td><td>API 404</td></tr>
+        <tr><th scope="row">gemini3-flash (no schema)</th><td class="zero">0/9</td>
+          <td class="zero">0/9</td><td>5.00</td><td>747 ms</td><td>API 404</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <figcaption class="cap">Two findings. On <b>messy</b> input, every working model scored
+      <b>0% first-attempt and 100% final</b>, and that gap is exactly what the correction loop buys.
+      And <b>llama4-scout matched llama4-maverick at about 1/5.9 of the cost per success</b>
+      ($0.000365 against $0.002148), a result that only falls out of measuring instead of
+      assuming. The two gemini3-flash configurations returned API 404 and scored 0/9 on both
+      passes, and they stay in the table, because a benchmark that drops the models which failed is
+      not a benchmark.</figcaption>
+  </figure>
+  </section>
+
+  <section>
+  <h2>6 · The service, and the layer underneath it</h2>
+  <figure class="ev">
+    <div class="shot">
+      <div class="shot-bar"><span class="url">127.0.0.1:8099/docs</span></div>
+      <img src="../../img/verity-swagger.png" alt="Screenshot: the Verity FastAPI service running locally at 127.0.0.1 port 8099, serving its OpenAPI 3.1 contract at /docs. The POST /api/v1/intake/process endpoint is expanded, documenting a five-step pipeline: LLM extraction, Pydantic validation, automated correction loop, HubSpot synchronisation, and a complete audit trail.">
+    </div>
+    <figcaption class="cap">The service running, with its OpenAPI 3.1 contract served at
+      <code>/docs</code>. The endpoint documents the five stages the request passes through:
+      extraction, Pydantic validation, the automated correction loop, HubSpot synchronisation, and
+      the audit trail.</figcaption>
+  </figure>
+  <p>The model is a configuration value, not a dependency. A <code>BaseLLMProvider</code> abstract
+    base class defines the call surface, a <code>PROVIDER_MAP</code> registry resolves names to
+    implementations, and an orchestrator sits above both with automatic failover on rate-limit
+    errors. Cost is tracked per token, with prompt-cache awareness, rather than estimated afterwards
+    from an invoice.</p>
+  <p>That layer is why the benchmark above exists at all. Six configurations across nine trials
+    each, with real latency and real cost per success, is a config sweep rather than a rewrite, and
+    the <b>cost / success</b> column comes from the per-token tracking rather than an estimate. The
+    1/5.9 cost finding was not available to anyone who had hard-coded a client.</p>
+  </section>
+
+  <footer>
+    <p>82 tests passing in 0.54 s, run 2026-09-09. The captured response shown here is replayed from
+    <code>examples/sample_output_with_audit.json</code>: the interface and the data are both real,
+    and the run is a recorded one rather than a live call at page load. The benchmark is a recorded
+    six-model run from 2026-03-01. The sales note in the screenshot is the project's own sample
+    input from that examples file. <code>emet-crm-pipeline-demo</code> is a private repository, so
+    the code is not linked here; it is available for a live walkthrough. Related evidence:
+    <a href="../tie-out/">TIE-OUT</a>, where an independent oracle catches a mapping that reconciles
+    to the cent, and <a href="../lcc/">LCC</a>, where consent gates sit on every send path. Fuller
+    context on the <a href="../../">home page</a> and the <a href="../../about/">About page</a>.</p>
+  </footer>
+
+</main>
+</body>
+</html>

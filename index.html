@@ -2,206 +2,150 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Javendean Naipaul — AI Solutions Engineer · Evidence</title>
-<style>
-  :root{
-    --ink:#14181d; --ink-2:#3d4650; --ink-3:#6b7684;
-    --line:#e2e6ea; --bg:#ffffff; --bg-2:#f7f9fa;
-    --accent:#1c5fa8; --accent-soft:#e8f1fa;
-    --ok:#1f7a4d; --ok-soft:#e7f4ed;
-    --warn:#8a5a12; --warn-soft:#fdf3e2;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; background:var(--bg-2); color:var(--ink);
-    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  .sheet{max-width:940px;margin:32px auto;background:var(--bg);padding:56px 60px 48px;
-    border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 3px rgba(20,24,29,.05)}
-  header{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:32px}
-  h1{font-size:31px;line-height:1.15;margin:0 0 6px;letter-spacing:-.5px}
-  .role{font-size:17px;color:var(--accent);font-weight:600;margin:0 0 14px}
-  .meta{font-size:13.5px;color:var(--ink-3);display:flex;gap:22px;flex-wrap:wrap}
-  .meta b{color:var(--ink-2);font-weight:600}
-  h2{font-size:12px;text-transform:uppercase;letter-spacing:1.4px;color:var(--ink-3);
-    margin:40px 0 16px;font-weight:700}
-  table{width:100%;border-collapse:collapse;font-size:14.5px}
-  th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.9px;
-    color:var(--ink-3);border-bottom:1px solid var(--line);padding:0 12px 9px 0;font-weight:700}
-  td{padding:11px 12px 11px 0;border-bottom:1px solid var(--line);vertical-align:top}
-  td:first-child{font-weight:600;width:31%;color:var(--ink)}
-  .pill{display:inline-block;font-size:10.5px;font-weight:700;padding:2.5px 8px;
-    border-radius:20px;letter-spacing:.4px;white-space:nowrap}
-  .p-ok{background:var(--ok-soft);color:var(--ok)}
-  .p-adj{background:var(--accent-soft);color:var(--accent)}
-  .p-gap{background:var(--warn-soft);color:var(--warn)}
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-  .card{border:1px solid var(--line);border-radius:8px;padding:22px 24px;background:var(--bg)}
-  .card h3{margin:0 0 3px;font-size:18px;letter-spacing:-.2px}
-  .card .stack{font-size:12px;color:var(--ink-3);margin:0 0 14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-  .card p{margin:0 0 12px;font-size:14px;color:var(--ink-2)}
-  .card ul{margin:0;padding-left:17px;font-size:13.5px;color:var(--ink-2)}
-  .card li{margin-bottom:7px}
-  .card li b{color:var(--ink)}
-  .flow{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;
-    padding:20px 24px;margin:14px 0 0;font-size:13px}
-  .flow-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:10px}
-  .node{background:#fff;border:1px solid var(--line);border-radius:5px;padding:6px 11px;
-    font-weight:600;font-size:12.5px;white-space:nowrap}
-  .node.hl{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
-  .arrow{color:var(--ink-3);font-size:13px}
-  .flow-note{font-size:12.5px;color:var(--ink-3);margin:0;padding-top:10px;border-top:1px dashed var(--line)}
-  .callout{border-left:3px solid var(--accent);background:var(--accent-soft);
-    padding:16px 20px;border-radius:0 6px 6px 0;font-size:14.5px;color:var(--ink-2)}
-  .callout b{color:var(--ink)}
-  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:4px}
-  .fact{border:1px solid var(--line);border-radius:8px;padding:15px 16px;background:var(--bg-2)}
-  .fact .n{font-size:23px;font-weight:700;color:var(--accent);letter-spacing:-.5px;line-height:1.1}
-  .fact .l{font-size:11.5px;color:var(--ink-3);margin-top:4px;line-height:1.35}
-  footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);
-    font-size:12px;color:var(--ink-3)}
-  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
-    background:var(--bg-2);padding:1.5px 5px;border-radius:3px}
-  @media print{
-    body{background:#fff} .sheet{margin:0;border:0;box-shadow:none;padding:0;max-width:100%}
-    .card,.fact,.flow{break-inside:avoid}
-  }
-  @media(max-width:760px){
-    .sheet{padding:32px 24px;margin:0}
-    .cards,.facts{grid-template-columns:1fr}
-    td:first-child{width:auto}
-  }
-</style>
+<meta name="color-scheme" content="light">
+<title>Javendean Naipaul &middot; analyst and engineer</title>
+<meta name="description" content="Javendean Naipaul builds systems that decide when a model's output is trustworthy enough to write into a system of record. Three case studies, each shipping the check that proves it.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Javendean Naipaul">
+<meta property="og:title" content="Javendean Naipaul">
+<meta property="og:description" content="Analyst and engineer. Systems that decide when a model's output is trustworthy enough to write into a system of record.">
+<meta name="twitter:card" content="summary">
 </head>
 <body>
-<div class="sheet">
+
+<main class="sheet">
+
+  <nav class="sitenav" aria-label="Main">
+    <a href="./" aria-current="page">Javendean Naipaul</a>
+    <span>
+      <a href="work/tie-out/">TIE-OUT</a>
+      <a href="work/verity/">Verity</a>
+      <a href="work/lcc/">LCC</a>
+      <a href="about/">About</a>
+    </span>
+  </nav>
 
   <header>
     <h1>Javendean Naipaul</h1>
-    <p class="role">AI Solutions Engineer — evidence of delivered agent systems</p>
-    <div class="meta">
-      <span><b>Engagement</b> Remote contract</span>
-      <span><b>Rate</b> $80–120/hr</span>
-      <span><b>Availability</b> Immediate</span>
-    </div>
+    <p class="role">Analyst and engineer. I build the systems that decide when a model's output is
+    trustworthy enough to write into a system of record.</p>
   </header>
 
-  <h2>Requirement &rarr; Evidence</h2>
-  <table>
-    <tr><th>What the role asks for</th><th>What I have actually built</th><th></th></tr>
-    <tr>
-      <td>Proven AI agent implementation</td>
-      <td>A production correction-loop agent: extract against a typed contract, convert validation
-          failures into targeted repair prompts, retry, escalate what it cannot resolve.</td>
-      <td><span class="pill p-ok">Direct</span></td>
-    </tr>
-    <tr>
-      <td>Azure OpenAI / GPT</td>
-      <td>The LLM layer sits behind an abstract provider interface with a registry and an
-          auto-failover orchestrator. Already built on the <code>openai</code> SDK — the same
-          client Azure OpenAI uses. Adding the Azure provider is additive, not a rewrite.</td>
-      <td><span class="pill p-adj">Adjacent</span></td>
-    </tr>
-    <tr>
-      <td>Business discovery &amp; requirements</td>
-      <td>LCC was specified with non-technical non-profit staff and runs for ~10 admin users.
-          Ambiguity is encoded and escalated rather than guessed.</td>
-      <td><span class="pill p-ok">Direct</span></td>
-    </tr>
-    <tr>
-      <td>Build, deploy, document, hand over</td>
-      <td>Docker multi-stage build and Kubernetes manifests; live Vercel deployment behind auth;
-          architecture, conventions, testing and known-risk documents maintained in-repo.</td>
-      <td><span class="pill p-ok">Direct</span></td>
-    </tr>
-    <tr>
-      <td>Microsoft Copilot / Copilot Studio</td>
-      <td>Not yet hands-on. Copilot Studio's schema-bound actions over M365 data are structurally
-          the same problem I have solved — a typed contract the model must satisfy, with a human
-          gate on low confidence.</td>
-      <td><span class="pill p-gap">Learning</span></td>
-    </tr>
-  </table>
+  <p class="lede">Three of them are below. The inputs are an acquired company's chart of accounts, a
+  sales rep's freehand note and a public intake form, each of them untrusted and each having to land
+  somewhere permanent without corrupting it. Each system ships <b>the check that proves the boundary
+  holds</b>, and the check is code you can run, not a claim on a slide.</p>
 
-  <h2>The pattern I keep applying</h2>
-  <div class="flow">
-    <div class="flow-row">
-      <span class="node">Unstructured input</span><span class="arrow">&rarr;</span>
-      <span class="node">LLM extraction</span><span class="arrow">&rarr;</span>
-      <span class="node">Typed validation</span><span class="arrow">&rarr;</span>
-      <span class="node hl">&#10003; System of record</span>
-    </div>
-    <div class="flow-row" style="margin-left:150px">
-      <span class="arrow">&#8627; on failure &rarr;</span>
-      <span class="node hl">Targeted correction prompt</span>
-      <span class="arrow">&rarr; retry (bounded)</span>
-    </div>
-    <div class="flow-row" style="margin-left:150px">
-      <span class="arrow">&#8627; on low confidence &rarr;</span>
-      <span class="node">Flag for human + written reason</span>
-    </div>
-    <p class="flow-note">Every attempt, error and applied correction is written to an audit trail.
-      Exhausting retries returns the best available result with explicit error flags —
-      <b>never a silent failure.</b></p>
-  </div>
+  <section>
+  <h2>Work</h2>
 
-  <h2>Two delivered systems</h2>
-  <div class="cards">
+  <div class="cards cards--3">
 
     <div class="card">
-      <h3>Verity</h3>
-      <p class="stack">Python 3.12 · FastAPI · Pydantic 2 · Docker · Kubernetes · HubSpot v3</p>
-      <p>Turns unstructured sales notes into validated CRM records. A single LLM call gets this
-         approximately right and fails silently; this service fails loudly and repairs itself.</p>
-      <ul>
-        <li><b>Instructional error repair.</b> Not &ldquo;invalid date&rdquo; but <em>&ldquo;end of
-            Q2 must be YYYY-MM-DD; Q2 ends June 30.&rdquo;</em></li>
-        <li><b>Calibrated uncertainty.</b> Confidence scores, <code>requires_human_review</code>,
-            written review reasons, ambiguity notes, estimate flags.</li>
-        <li><b>Provider failover.</b> Abstract base class, registry, and an orchestrator that fails
-            over on rate limits, with per-token cost tracking.</li>
-        <li><b>82 tests</b>, whole suite under half a second.</li>
-      </ul>
+      <h3><a href="work/tie-out/">TIE-OUT</a></h3>
+      <p>Maps an acquired company's chart of accounts onto the group chart, and refuses to publish a
+      close pack it cannot stand behind.</p>
+      <p class="stack">Python &middot; DuckDB &middot; dbt &middot; Fellegi-Sunter record linkage
+      &middot; 124 tests in 47.95s</p>
+      <p>Its evaluation harness argues against its own numbers: name similarity is barred from
+      choosing a destination at <b>58.8%</b> top-1, and the flattering agreement-with-key figure is
+      printed under the word <b>CIRCULAR</b>.</p>
     </div>
 
     <div class="card">
-      <h3>LCC Management System</h3>
-      <p class="stack">SvelteKit · Supabase/Postgres · Vercel · Twilio · <b>live in production</b></p>
-      <p>Contact management, segmentation and bilingual SMS campaigns for a non-profit.
-         ~10 admin users, ~350 contacts. Real users, real regulatory exposure.</p>
-      <ul>
-        <li><b>Compliance as architecture.</b> TCPA opt-outs are never deleted — re-subscribing
-            sets a timestamp so the original opt-out time survives, which is the value regulators
-            ask for. Every send path filters on active opt-outs.</li>
-        <li><b>A cost bug caught by a test.</b> Spanish templates force UCS-2 encoding (67 chars
-            per segment against GSM-7's 153). One template was 3 segments in Spanish and 1 in
-            English — roughly double the cost per campaign. Fixed, then locked behind an automated
-            segment-budget test so it cannot regress.</li>
-        <li><b>Governed access.</b> New accounts require explicit admin approval; no self-serve
-            signup.</li>
-      </ul>
+      <h3><a href="work/verity/">Verity</a></h3>
+      <p>Turns unstructured sales notes into schema-validated CRM records. Failures become specific
+      repair instructions and a bounded retry, never a silent success.</p>
+      <p class="stack">Python 3.12 &middot; FastAPI &middot; Pydantic 2 &middot; Docker &middot;
+      Kubernetes &middot; HubSpot API v3 &middot; 82 tests in 0.54s</p>
+      <p>On messy input, every working model in a six-model benchmark scored
+      <span class="zero">0%</span> first-attempt and <span class="hundred">100%</span> final. That
+      gap is what the correction loop buys.</p>
+    </div>
+
+    <div class="card">
+      <h3><a href="work/lcc/">LCC</a></h3>
+      <p>Bilingual member messaging and contact management, live in production and auth-gated.
+      Authorisation lives in the database, not in route guards.</p>
+      <p class="stack">SvelteKit &middot; Supabase/Postgres &middot; Vercel &middot; Twilio
+      &middot; 587 lines of SQL across 9 migrations</p>
+      <p><b>18 row-level-security policies</b> on 7 tables. The same message is 1 SMS segment in
+      English and <b>3 in Spanish</b>: accents and <code>&iquest;</code>/<code>&iexcl;</code> force
+      UCS-2, cutting the segment budget from 153 characters to 67.</p>
     </div>
 
   </div>
+  </section>
 
-  <h2>Verified facts</h2>
-  <div class="facts">
-    <div class="fact"><div class="n">82</div><div class="l">Verity tests passing<br>(0.41s, run today)</div></div>
-    <div class="fact"><div class="n">HTTP 200</div><div class="l">LCC production site<br>live, auth-gated</div></div>
-    <div class="fact"><div class="n">~350</div><div class="l">contacts managed<br>in production</div></div>
-    <div class="fact"><div class="n">2&#8239;697</div><div class="l">tests in a third system<br>(outreach automation)</div></div>
-  </div>
+  <section>
+  <h2>Selected evidence</h2>
+
+  <p>The claim worth disproving: <em>if every source dollar lands in the group and nothing crossed
+  the ledger, the mapping is correct.</em> TIE-OUT ships the disproof as a passing test, not a
+  paragraph.</p>
+
+  <figure class="ev">
+      <div class="term">
+        <div class="term-bar"><span class="term-title">python scripts/prove_tests_fire.py</span></div>
+<pre tabindex="0" role="region" aria-label="Terminal output: python scripts/prove_tests_fire.py, scrollable"><span class="dim">Injecting a permutation: E1 5000 'COGS - Materials' -&gt; G-6100 'Rent and Occupancy'.</span>
+
+<span class="w">3. THE DISPROOF -- an arithmetically perfect, semantically wrong mapping</span>
+  <span class="dim">expected: conservation PASSES, sign preservation PASSES, and ONLY the oracle fails.</span>
+
+  <span class="g">OK</span>  expect_table_aggregation_to_equal_other_table   want <span class="g">PASS</span>   got <span class="g">PASS</span>
+  <span class="g">OK</span>  assert_sign_preservation                        want <span class="g">PASS</span>   got <span class="g">PASS</span>
+  <span class="g">OK</span>  assert_subtotal_oracle                          want <span class="r">FAIL</span>   got <span class="r">FAIL</span>
+
+  <span class="y">what the oracle saw, and nothing else could:</span>
+      E1 2026-05 gross_profit: off by <span class="r">-309,245.88</span>
+      E1 2026-06 gross_profit: off by <span class="r">-323,912.13</span>
+      E1 2026-07 gross_profit: off by <span class="r">-206,319.81</span></pre>
+      </div>
+      <figcaption class="cap cap--claim">Both accounts are debit-normal and the row is assigned
+        exactly once, so the entity still ties to the cent. Gross profit for 2026-05 is wrong by
+        <span class="bignum">$309,245.88</span></figcaption>
+  </figure>
+
+  <p>Only the subtotal oracle catches it, because it compares reconstructed captions against
+  subtotals <b>the entity itself published from its own chart</b>, a classification made before any
+  group chart existed, which the mapper never reads. That is an independent oracle, not a tighter
+  tolerance. The harness, the design decisions and the limits are in the
+  <a href="work/tie-out/">TIE-OUT case study</a>.</p>
+
+  </section>
+
+  <section>
+  <h2>Background</h2>
+
+  <p>Technical business analyst at Morgan Stanley in Manhattan, September 2022 to June 2024:
+  partnered with the COO, built 5+ trillion row dataset infrastructure on Azure, put PII access
+  control in place for 300K+ clients, and delivered 100% audit-ready data lineage. Since June 2024,
+  quantitative analyst
+  at Outlier AI, where I have diagnosed 250+ model reasoning errors and delivered 120+ GenAI and
+  LLM solutions for enterprise leaders. MS Risk Management (Actuarial Sciences) from CUNY Queens
+  College, GPA 3.83, with a graduate capstone on <em>VaR-based CLO &amp; ABS Portfolio Solvency
+  Optimization</em>. The longer version, including the risk and actuarial work, is on the
+  <a href="about/">About</a> page.</p>
+
+  </section>
 
   <footer>
-    Every number on this page was verified by running the code or the request, not read from a
-    stale log. Verity's suite was executed today; the LCC endpoint was requested today.
-    The LCC repository is private — a live walkthrough of the running application is available
-    on request.
+    <div class="meta">
+      <span><b>Email</b><a href="mailto:javendeannaipaul@gmail.com">javendeannaipaul@gmail.com</a></span>
+      <span><b>LinkedIn</b><a href="https://www.linkedin.com/in/javendean-naipaul-229b11169/">javendean-naipaul</a></span>
+      <span><b>GitHub</b><a href="https://github.com/Javendean">github.com/Javendean</a></span>
+      <span><b>R&eacute;sum&eacute;</b><a href="files/CapitalOne_JavendeanNaipaul_Resume.pdf">PDF</a></span>
+    </div>
+    <p>Every figure and terminal capture on this site was produced by running the code. Test counts,
+    timings and the bilingual segment measurement were recorded on 2026-09-09; the six-model
+    benchmark was run on 2026-03-01. TIE-OUT, Verity and the LCC platform are private repositories,
+    available for live walkthrough. Based in Queens, NY.</p>
   </footer>
 
-</div>
+</main>
 </body>
 </html>

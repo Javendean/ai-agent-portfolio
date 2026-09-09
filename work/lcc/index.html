@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>LCC Management System &middot; Bilingual member messaging in production &middot; Javendean Naipaul</title>
+<meta name="description" content="A production SvelteKit and Supabase messaging platform: 18 row-level-security policies over 7 tables, an opt-out record that is never deleted, and a bilingual send that costs three SMS segments in Spanish where its author assumed one.">
+<link rel="stylesheet" href="../../style.css">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Javendean Naipaul">
+<meta property="og:title" content="LCC Management System">
+<meta property="og:description" content="Bilingual SMS operations for a non-profit. 18 row-level-security policies, and compliance enforced identically on the free dispatch path.">
+<meta name="twitter:card" content="summary">
+</head>
+<body>
+<main class="sheet">
+
+  <nav class="sitenav" aria-label="Main">
+    <a href="../../">Javendean Naipaul</a>
+    <span>
+      <a href="../tie-out/">TIE-OUT</a>
+      <a href="../verity/">Verity</a>
+      <a href="./" aria-current="page">LCC</a>
+      <a href="../../about/">About</a>
+    </span>
+  </nav>
+
+  <header>
+    <h1>LCC Management System</h1>
+    <p class="role">Bilingual SMS and contact operations for a member organisation, live in
+    production, with authorisation enforced in the database rather than in route guards.</p>
+    <div class="meta">
+      <span><b>Stack</b> SvelteKit &middot; Supabase Postgres &middot; Vercel &middot; Twilio</span>
+      <span><b>Users</b> ~10 admins &middot; 450 reachable contacts</span>
+      <span><b>Code</b> Javendean/LCC_ManagementSystem (private)</span>
+      <span><b>Live</b> lcc-management-system.vercel.app (auth-gated)</span>
+    </div>
+  </header>
+
+  <section>
+  <h2 id="what-h">1 &middot; What it is: one app, two doors into the same tables</h2>
+  <p class="lede">Contacts, groups and bilingual SMS broadcasts run out of one SvelteKit app on
+  Vercel, backed by Supabase Postgres and sending through Twilio. About ten administrators use it.
+  It reaches <b>450 contacts, none of whom have opted out</b>, and its
+  largest group holds 323 members. Public intake forms write to the same tables the admin app
+  reads, which is the fact that decides most of the design below.</p>
+
+  <dl class="facts">
+    <div class="fact"><dt class="n">450</dt><dd class="l">contacts reachable,<br>0 opted out</dd></div>
+    <div class="fact"><dt class="n">587</dt><dd class="l">lines of SQL<br>across 9 migrations</dd></div>
+    <div class="fact"><dt class="n">18</dt><dd class="l">row-level-security policies<br>over 7 tables</dd></div>
+    <div class="fact"><dt class="n">4 years</dt><dd class="l">TCPA limitations period the<br>opt-out record has to survive</dd></div>
+  </dl>
+  </section>
+
+  <section>
+  <h2 id="schema-h">2 &middot; Authorisation lives in the database, not in route guards</h2>
+  <p>The schema is the substance of this project. 587 lines of SQL across 9 migrations define 7
+  tables and 11 indexes, and attach <b>18 row-level-security policies</b> to them. RLS is enabled on
+  all 7 tables. Who may read or write a given row is decided in Postgres, not in a server-side
+  check that happens to run first.</p>
+  <p>The reason is the second door. Public intake forms write to the same tables the admin app
+  reads, so there are two code paths into one dataset and only one of them sits behind an admin
+  session. A rule enforced in the admin path is, by construction, not enforced in the other. Moving
+  the rule next to the table makes it apply to both, and makes it apply to whatever gets added
+  later without anyone having to remember it. It is also why the policy count runs ahead of the
+  table count: 18 policies over 7 tables.</p>
+
+  <figure class="ev">
+  <table class="bench" aria-labelledby="schema-h">
+    <thead><tr><th scope="col">Object</th><th scope="col">Count</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Migrations</th><td>9</td></tr>
+      <tr><th scope="row">Tables</th><td>7</td></tr>
+      <tr><th scope="row">Tables with RLS enabled</th><td>7</td></tr>
+      <tr><th scope="row">Row-level-security policies</th><td>18</td></tr>
+      <tr><th scope="row">Indexes</th><td>11</td></tr>
+      <tr><th scope="row">Lines of SQL</th><td>587</td></tr>
+    </tbody>
+  </table>
+  <figcaption class="cap">Counted across the 9 migrations of the live project.</figcaption>
+  </figure>
+  </section>
+
+  <section>
+  <h2 id="tcpa-h">3 &middot; An opt-out row is never deleted</h2>
+  <p>TCPA exposure does not end when a contact changes their mind. The value a regulator asks for
+  is <b>when consent was withdrawn</b>, and the statute of limitations runs four years. A schema
+  that removes the opt-out row when someone re-subscribes has destroyed the only record that
+  answers that question, and it destroys it at the exact moment the situation looks resolved.</p>
+  <p>So opt-out rows are never deleted here. Re-subscribing sets <code>resubscribed_at</code>,
+  which leaves the original opt-out timestamp intact, and <b>every send path filters on
+  <code>resubscribed_at IS NULL</code></b>. One column carries both jobs: it is the live sending
+  rule and it is the four-year evidence trail, so keeping the record and behaving correctly are the
+  same act rather than two obligations that can drift apart. The <code>450 contacts reachable, 0
+  opted out</code> counter in the screenshots below is what the operator sees before they
+  compose.</p>
+  </section>
+
+  <section>
+  <h2 id="segments-h">4 &middot; The same message takes one segment in English and three in Spanish</h2>
+  <p>Measured live in production on 2026-09-09: one announcement, composed twice, aimed at the same
+  group of 323 members. The counter above the compose box is not decoration, it is the thing that
+  caught this.</p>
+
+  <div class="cards">
+    <div class="card">
+      <figure class="ev">
+        <div class="shot">
+          <div class="shot-bar"><span class="url">lcc-management-system.vercel.app &middot; English</span></div>
+          <img src="../../img/lcc-blast-en.png" alt="Screenshot: the LCC messaging page composing an English SMS. The counter above the compose box reads 1 segment, 116 characters, GSM_7BIT_EXT. The page header reads 450 contacts reachable and 0 opted out, the selected group has 323 members, and an estimated reach of about 323 recipients is shown alongside an estimated Twilio cost. Contact names in the recipient list are blurred.">
+        </div>
+        <figcaption class="cap"><b>1 segment</b> &middot; 116 chars &middot; <code>GSM_7BIT_EXT</code></figcaption>
+      </figure>
+    </div>
+    <div class="card">
+      <figure class="ev">
+        <div class="shot">
+          <div class="shot-bar"><span class="url">lcc-management-system.vercel.app &middot; Spanish</span></div>
+          <img src="../../img/lcc-blast-es.png" alt="Screenshot: the same LCC messaging page composing the equivalent Spanish SMS to the same 323 member group. The counter now reads 3 segments, 169 characters, UTF16, because accented characters and inverted punctuation force UCS-2 encoding. Estimated reach is about 323 recipients at an estimated Twilio cost of 7 dollars 66 cents. Contact names in the recipient list are blurred.">
+        </div>
+        <figcaption class="cap"><span class="zero">3 segments</span> &middot; 169 chars &middot; <code>UTF16</code></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <figure class="ev">
+  <div class="scroller" tabindex="0" role="region" aria-label="Segment budget by encoding">
+  <table class="bench" aria-labelledby="segments-h">
+    <thead><tr>
+      <th scope="col">Composed in</th><th scope="col">Encoding</th>
+      <th scope="col">Chars per segment</th><th scope="col">Message length</th>
+      <th scope="col">Segments</th>
+    </tr></thead>
+    <tbody>
+      <tr><th scope="row">English</th><td>GSM_7BIT_EXT</td><td>153</td><td>116</td><td>1</td></tr>
+      <tr><th scope="row">Spanish</th><td>UTF16</td><td>67</td><td>169</td>
+          <td><span class="zero">3</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <figcaption class="cap">Accented characters and <code>&iquest;</code> / <code>&iexcl;</code> force
+  UCS-2, which cuts the per-segment budget from 153 characters to 67. The Spanish text is a little
+  longer than the English and lands in a budget less than half the size, so it takes three segments
+  instead of one.</figcaption>
+  </figure>
+
+  <p>At an estimated reach of 323 recipients and Twilio's <code>RATE_PER_SEGMENT = 0.0079</code>,
+  the paid path for that Spanish blast carries an estimated cost of <b>$7.66</b>. The failure mode
+  is not the price of a single send. It is that the Spanish half of a bilingual campaign consumes
+  three segments where its author assumed one, and nobody finds out, because both versions send
+  successfully. One live template was doing exactly this. I fixed it and then locked the fix behind
+  an automated test asserting a segment budget per template, so the next person to edit the copy
+  learns about it at test time rather than on the invoice.</p>
+  </section>
+
+  <section>
+  <h2 id="shortcut-h">5 &middot; $7.66 is the avoided cost, not a bill</h2>
+  <p>That estimate is what the paid path would cost. The operator does not have to pay it.</p>
+
+  <figure class="ev">
+    <div class="shot">
+      <div class="shot-bar"><span class="url">lcc-management-system.vercel.app &middot; Send via iPhone Shortcut</span></div>
+      <img src="../../img/lcc-shortcut-qr.png" alt="Screenshot: the Send via iPhone Shortcut dialog. It offers a QR code and a batch URL, both blurred here, to dispatch 250 personalised messages from the operator's own phone. The batch is labelled 250 recipients, expiring at a fixed time, single-use. A collapsed section reads First-time iPhone Shortcut setup, one-time, about 10 minutes. A warning notes that Apple throttles burst sends, so 250 messages take roughly 3 to 5 minutes to dispatch, and that the Shortcut keeps running when the screen locks.">
+    </div>
+    <figcaption class="cap">The QR code and the batch token are blurred because that URL is a live
+      credential.</figcaption>
+  </figure>
+
+  <p><code>prepare-shortcut</code> mints a single-use, time-limited batch URL, 32 bytes from
+  <code>crypto.getRandomValues</code>, and renders it as a QR code. The row is marked
+  <code>used_at</code> on first fetch, so <b>the token cannot be replayed</b>: a URL that is
+  screenshotted, forwarded, or read over someone's shoulder is already spent. An iPhone Shortcut
+  scans it, fetches the precomputed send list and dispatches from the operator's own phone. That
+  costs nothing, and it sidesteps A2P 10DLC carrier filtering.</p>
+  <p>The part that matters is what the free path did not get to skip. The endpoint <b>reuses the
+  same recipient resolution and consent gates as <code>/api/blast/send</code></b>. The same
+  <code>resubscribed_at IS NULL</code> filter decides who is in the batch whichever button the
+  operator presses, so the cheap route is a change of carrier, not a change of rules. Consent was
+  not routed around to save $7.66.</p>
+  <p>What the free path does cost is time, and the dialog says so rather than letting the operator
+  discover it mid-send: Apple throttles burst sends, so 250 messages take roughly 3 to 5 minutes to
+  dispatch, and first-time setup of the Shortcut is a one-off ten minutes.</p>
+  </section>
+
+  <section>
+  <h2 id="also-h">6 &middot; Also in the build</h2>
+  <ul>
+    <li>Admin-approval gate for new accounts. There is no self-serve signup into an app holding 450
+      contacts' phone numbers.</li>
+    <li>iOS Shortcuts bridge at <code>/api/shortcut/*</code>.</li>
+    <li>English and Spanish templates, with the per-template segment budget test attached.</li>
+    <li>Image and MMS attachments.</li>
+    <li>Scheduled send.</li>
+  </ul>
+  </section>
+
+  <footer>
+    <p>Segment, encoding and cost figures were measured live in production on 2026-09-09. Every
+    screenshot on this page has contact names blurred, and the Shortcut screenshot also has the
+    single-use batch token blurred, because it is a working credential. The repository
+    (<code>Javendean/LCC_ManagementSystem</code>) is private and the deployment is auth-gated, so
+    these screenshots and counts are the browsable artefact. Related evidence:
+    <a href="../tie-out/">TIE-OUT</a>, where an independent oracle catches a mapping that reconciles
+    to the cent, and <a href="../verity/">Verity</a>, an intake agent with a bounded correction loop.
+    Fuller context on the <a href="../../">home page</a> and the
+    <a href="../../about/">About page</a>.</p>
+  </footer>
+
+</main>
+</body>
+</html>
