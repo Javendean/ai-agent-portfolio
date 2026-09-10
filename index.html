@@ -26,6 +26,14 @@
 </head>
 <body>
 
+<!-- v3 Part L. The living ground, first in the DOM and last in the stacking
+     order: z-index -1 in v2.css puts it above the page canvas and under every
+     box (L10). It ships with a static CSS texture, so with JS off it is still
+     a surface and not a flat field (L8); v2.js appends its canvas inside.
+     L9 is here and in the CSS: aria-hidden, and pointer-events: none.
+     Nothing focusable precedes the skip link, so G2 still holds. -->
+<div class="ground" aria-hidden="true"></div>
+
 <!-- G2: first in tab order, before the header. -->
 <a class="skip" href="#main">Skip to content</a>
 
@@ -123,9 +131,21 @@
           </svg>
         </div>
 
-        <img class="hero-portrait" src="img/portrait.jpg" width="1200" height="1500"
-             alt="Javendean Naipaul: a man in a blue shirt and patterned tie, wearing glasses, smiling directly at the camera against a plain warm grey wall."
-             fetchpriority="high" decoding="async">
+        <!-- v3 Part P. P7: WebP first, PNG second, and the browser takes the
+             first type it can decode. Both files are same-origin (X1).
+             The <picture> is a plain box and nothing more: no class that draws
+             a border, a radius, a background or a shadow, because the asset
+             spent its alpha ending without an edge and any one of those would
+             redraw it. The 860x894 attributes are the real pixel dimensions of
+             both files, so the ratio is known before a byte arrives and the
+             hero does not shift (v2 I2). No lazy: this one is above the fold.
+             P9: the alt says who he is and what he looks like. -->
+        <picture class="hero-pic">
+          <source srcset="img/portrait.webp" type="image/webp">
+          <img class="hero-portrait" src="img/portrait.png" width="860" height="894"
+               alt="Javendean Naipaul: a man in a blue shirt and patterned tie, wearing glasses, smiling at the camera."
+               fetchpriority="high" decoding="async">
+        </picture>
       </div>
     </div>
 
@@ -164,6 +184,88 @@
           the admin app reads, under the same policies, or the two will drift.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- SCROLL NARRATIVE ===================================================== -->
+  <!-- v3 Part S. Three statements, in sequence, each a complete sentence and
+       each traceable to FACTS.md (S10): the position from the hero, the
+       disproof figure, and the rule the harness applies to its own agreement
+       with its answer key, which it labels CIRCULAR and bars from being quoted
+       as accuracy.
+
+       S3 is a markup contract and this is where it is kept: one .narr-w per
+       word, 44 spans for 44 words, no span holding two words and no word
+       split across two. S11 is the other half of it: the whitespace sits
+       BETWEEN the spans and never inside them, so extracting textContent gives
+       the three sentences back with single spaces and nothing glued together.
+
+       S12: nothing in here can take focus. No link, no button, no tabindex,
+       no tabbable scroll region. A keyboard user leaves the capability blocks
+       and lands on the first project link, so the 8 viewport heights cost one
+       Tab, not a scroll. The aria-label names the region for anyone jumping by
+       landmark; there is no heading because a heading here would be a fourth
+       type size in a block whose whole job is one voice.
+
+       S5/S6/S7 are in v2.css: .narr-w is born at opacity 1 and --text-1, and
+       the per-word staging is added behind @supports, a no-preference query
+       and a data attribute. Nothing here starts invisible. -->
+  <section class="narr" aria-label="What the work is">
+    <div class="narr-sticky">
+
+      <p class="narr-line">
+        <span class="narr-w" style="--i:0">Mapping,</span>
+        <span class="narr-w" style="--i:1">extraction</span>
+        <span class="narr-w" style="--i:2">and</span>
+        <span class="narr-w" style="--i:3">authorisation</span>
+        <span class="narr-w" style="--i:4">all</span>
+        <span class="narr-w" style="--i:5">reduce</span>
+        <span class="narr-w" style="--i:6">to</span>
+        <span class="narr-w" style="--i:7">one</span>
+        <span class="narr-w" style="--i:8">question:</span>
+        <span class="narr-w" style="--i:9">whether</span>
+        <span class="narr-w" style="--i:10">an</span>
+        <span class="narr-w" style="--i:11">output</span>
+        <span class="narr-w" style="--i:12">can</span>
+        <span class="narr-w" style="--i:13">be</span>
+        <span class="narr-w" style="--i:14">trusted</span>
+        <span class="narr-w" style="--i:15">in</span>
+        <span class="narr-w" style="--i:16">a</span>
+        <span class="narr-w" style="--i:17">system</span>
+        <span class="narr-w" style="--i:18">of</span>
+        <span class="narr-w" style="--i:19">record.</span>
+      </p>
+
+      <p class="narr-line">
+        <span class="narr-w" style="--i:20">A</span>
+        <span class="narr-w" style="--i:21">mapping</span>
+        <span class="narr-w" style="--i:22">can</span>
+        <span class="narr-w" style="--i:23">reconcile</span>
+        <span class="narr-w" style="--i:24">to</span>
+        <span class="narr-w" style="--i:25">the</span>
+        <span class="narr-w" style="--i:26">cent</span>
+        <span class="narr-w" style="--i:27">and</span>
+        <span class="narr-w" style="--i:28">still</span>
+        <span class="narr-w" style="--i:29">be</span>
+        <span class="narr-w" style="--i:30">wrong</span>
+        <span class="narr-w" style="--i:31">by</span>
+        <span class="narr-w" style="--i:32">$309,245.88.</span>
+      </p>
+
+      <p class="narr-line">
+        <span class="narr-w" style="--i:33">So</span>
+        <span class="narr-w" style="--i:34">I</span>
+        <span class="narr-w" style="--i:35">do</span>
+        <span class="narr-w" style="--i:36">not</span>
+        <span class="narr-w" style="--i:37">let</span>
+        <span class="narr-w" style="--i:38">a</span>
+        <span class="narr-w" style="--i:39">system</span>
+        <span class="narr-w" style="--i:40">grade</span>
+        <span class="narr-w" style="--i:41">its</span>
+        <span class="narr-w" style="--i:42">own</span>
+        <span class="narr-w" style="--i:43">output.</span>
+      </p>
+
     </div>
   </section>
 
@@ -221,20 +323,23 @@
 
           <div class="proj-media">
             <div class="term">
-              <div class="term-head">python scripts/prove_tests_fire.py  (excerpt)</div>
-<pre class="term-body" tabindex="0" role="region" aria-label="Terminal output from the TIE-OUT disproof script, horizontally scrollable"><span class="dim">Injecting a permutation: E1 5000 'COGS - Materials' -&gt; G-6100 'Rent and Occupancy'.</span>
-
-<span class="w">3. THE DISPROOF -- an arithmetically perfect, semantically wrong mapping</span>
-  <span class="dim">expected: conservation PASSES, sign preservation PASSES, and ONLY the oracle fails.</span>
+              <!-- X5. This block was captioned "(excerpt)", which reads as a
+                   verbatim quote, over four lines FACTS.md does not record the
+                   script as printing. The caption no longer claims to quote and
+                   the invented lines are gone: what is left is the injection,
+                   the three want/got results and the three gross profit deltas,
+                   every one of them recorded in FACTS.md. -->
+              <div class="term-head">python scripts/prove_tests_fire.py  ·  what the run reports</div>
+<pre class="term-body" tabindex="0" role="region" aria-label="Results from the TIE-OUT disproof script, horizontally scrollable"><span class="dim">Injected: E1 5000 'COGS - Materials' -&gt; G-6100 'Rent and Occupancy'.</span>
 
   <span class="g">OK</span>  expect_table_aggregation_to_equal_other_table   want <span class="g">PASS</span>   got <span class="g">PASS</span>
   <span class="g">OK</span>  assert_sign_preservation                        want <span class="g">PASS</span>   got <span class="g">PASS</span>
   <span class="g">OK</span>  assert_subtotal_oracle                          want <span class="r">FAIL</span>   got <span class="r">FAIL</span>
 
-  <span class="dim">what the oracle saw, and nothing else could:</span>
-      E1 2026-05 gross_profit: off by <span class="r">-309,245.88</span>
-      E1 2026-06 gross_profit: off by <span class="r">-323,912.13</span>
-      E1 2026-07 gross_profit: off by <span class="r">-206,319.81</span></pre>
+  <span class="dim">Gross profit, off by:</span>
+      <span class="w">E1 2026-05</span>   <span class="r">-309,245.88</span>
+      <span class="w">E1 2026-06</span>   <span class="r">-323,912.13</span>
+      <span class="w">E1 2026-07</span>   <span class="r">-206,319.81</span></pre>
             </div>
           </div>
         </article>
@@ -369,10 +474,15 @@
   <section class="band" aria-labelledby="facts-h">
     <div class="shell">
       <p class="band-label">Verified facts</p>
-      <h2 class="band-title" id="facts-h">Five numbers the systems report about themselves.</h2>
-      <p class="lede">None of these is on the page above, and one of them is a system
-      refusing to let me quote it. Run dates are given because a number without one is a
-      claim. The case studies carry the output each was read from.</p>
+      <h2 class="band-title" id="facts-h">Five things the systems report about themselves.</h2>
+      <!-- X5. This lede used to open "None of these is on the page above", which
+           its own page disproved: $7.66 and 32 bytes both appear in the LCC
+           section, and that section points forward to one of them with the word
+           "below". The heading said "numbers" while one card is the word
+           CIRCULAR, which is a label. Both now say what is true. -->
+      <p class="lede">Each of these is a system reporting on itself, and one of them is a
+      system refusing to let me quote it. Run dates are given because a number without one
+      is a claim. The case studies carry the output each was read from.</p>
 
       <ul class="facts reveal">
         <li class="fact">
@@ -428,6 +538,17 @@
     <a href="files/CapitalOne_JavendeanNaipaul_Resume.pdf">Résumé, PDF</a>
   </div>
 </footer>
+
+<!-- v3 Part I. The ichthys loader's shell, in the markup rather than written
+     by JS: the live region then exists before its text does, which is the case
+     a screen reader is most reliable about (I8), so the <p> is deliberately
+     empty and v2.js writes the label a tick later. It stays display:none until
+     v2.js adds .loader-on, which is what keeps it away from a reader with no
+     JavaScript (I6). I9: neither child can take focus. -->
+<div class="loader" role="status" aria-live="polite">
+  <canvas class="loader-fig" aria-hidden="true"></canvas>
+  <p class="loader-label"></p>
+</div>
 
 <script src="v2.js" defer></script>
 </body>
