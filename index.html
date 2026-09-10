@@ -53,8 +53,9 @@
     <div class="shell">
       <div class="hero-inner">
         <div class="hero-text">
-          <p class="hero-eyebrow">Verification systems · Queens, NY</p>
-
+          <!-- The eyebrow that sat here said "Verification systems, Queens, NY".
+               It was the default AI-SaaS hero shape, and it restated the headline's
+               own subject one line above it. The location lives in the footer. -->
           <h1 class="hero-title" id="hero-h">I build the <em>check</em>.</h1>
 
           <!-- The two-tone move: the vocabulary sits at --text-2 and recedes,
@@ -74,9 +75,18 @@
             the wrong account.</span>
           </p>
 
+          <!-- v4 C6. The résumé PDF used to hang here and in the footer. Its
+               own experience bullet reads "Architect 120+ GenAI / LLM solutions
+               for enterprise leaders (Google, Meta, OpenAI, Anthropic, etc.)",
+               which is the exact belief the Background section spends a
+               paragraph refusing to create. A reader who takes the link 300px
+               after that paragraph reads the careful wording as the hedge and
+               the PDF as the truth. The PDF is frozen this round, so the link
+               comes off rather than the denial coming down. It goes back the
+               moment the bullet is rewritten off the lab list. -->
           <ul class="hero-meta">
             <li>Quantitative analyst, Outlier AI</li>
-            <li><a href="files/CapitalOne_JavendeanNaipaul_Resume.pdf">Résumé, PDF</a></li>
+            <li><a href="https://github.com/Javendean" target="_blank" rel="noopener">github.com/Javendean</a></li>
           </ul>
         </div>
 
@@ -470,6 +480,426 @@
     </div>
   </section>
 
+  <!-- CAPABILITIES ========================================================= -->
+  <!-- v4 B4. A capability with nothing behind it is a keyword, so every chip
+       carries the project on this page that demonstrates it, and the lede
+       below scopes the strip to the three measured systems, so every chip is
+       read from a case study rather than from a repository description. -->
+  <section class="band" aria-labelledby="caps-h">
+    <div class="shell">
+      <p class="band-label">Capabilities</p>
+      <h2 class="band-title" id="caps-h">Each one names the project on this page that shows it.</h2>
+      <p class="lede">If a capability had no project behind it, I took it out rather than leave
+      it standing as a word. The three systems above are what these are read from.</p>
+
+      <ul class="caps reveal">
+        <li class="cap-chip">Record linkage · TIE-OUT</li>
+        <li class="cap-chip">Data pipelines · TIE-OUT</li>
+        <li class="cap-chip">Independent oracles · TIE-OUT</li>
+        <li class="cap-chip">Schema contracts · Verity</li>
+        <li class="cap-chip">Correction loops · Verity</li>
+        <li class="cap-chip">Model evaluation · Verity</li>
+        <li class="cap-chip">Row level authorisation · LCC</li>
+        <li class="cap-chip">SQL migrations · LCC</li>
+        <li class="cap-chip">Production deployment · LCC</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- MEASURED OUTCOMES ==================================================== -->
+  <!-- v4 B5. Counted quantities only, each with the unit it was counted in
+       and each one recorded in FACTS.md. No percentage appears here without
+       its denominator, and no adjective appears here at all. -->
+  <section class="band" aria-labelledby="out-h">
+    <div class="shell">
+      <p class="band-label">Measured outcomes</p>
+      <h2 class="band-title" id="out-h">Nine counts, and what each one counted.</h2>
+      <p class="lede">Quantities I counted, with the run date wherever a run produced them.
+      Eight of them are the size and the shape of the work rather than a result. The ninth is
+      the one run that produced nothing, and it is here rather than at the bottom of the page
+      because leaving it out is how a record starts to lie.</p>
+
+      <ul class="grid-m reveal">
+        <li class="m-cell">
+          <span class="m-n">124 tests</span>
+          <span class="m-l">Passing in 47.95 seconds, run 2026-09-09. TIE-OUT.</span>
+        </li>
+        <li class="m-cell">
+          <span class="m-n">12 modules</span>
+          <span class="m-l">In the tieout package, over about 3,200 lines of Python.
+          TIE-OUT.</span>
+        </li>
+        <li class="m-cell">
+          <span class="m-n">82 tests</span>
+          <span class="m-l">Passing in 0.54 seconds, run 2026-09-09. Verity.</span>
+        </li>
+        <li class="m-cell">
+          <span class="m-n">6 x 9</span>
+          <span class="m-l">Six models over nine trials each, on clean, messy and adversarial
+          input, run 2026-03-01. Verity.</span>
+        </li>
+        <li class="m-cell">
+          <span class="m-n">587 lines</span>
+          <span class="m-l">Of SQL across 9 migrations, covering 7 tables and 11 indexes.
+          LCC.</span>
+        </li>
+        <li class="m-cell">
+          <span class="m-n">18 policies</span>
+          <span class="m-l">Row level security policies, with RLS enabled on all 7 tables.
+          Authorisation lives in the database. LCC.</span>
+        </li>
+        <li class="m-cell">
+          <span class="m-n">450 contacts</span>
+          <span class="m-l">Reachable, 0 opted out. The largest group holds 323 members.
+          LCC.</span>
+        </li>
+        <li class="m-cell">
+          <span class="m-n">2,697 tests</span>
+          <span class="m-l">Collected on 2026-09-09 in OutreachForge, a private project.
+          Collected counts them. It does not report them passing.</span>
+        </li>
+        <!-- v4 N1. The null result gets a cell in the grid, at 8 percent of the
+             page instead of 78, next to the counts that flatter me. -->
+        <li class="m-cell">
+          <span class="m-n">848 iterations</span>
+          <span class="m-l">73 submission attempts, zero scored results. I published the run
+          as a failure corpus rather than delete it. aimo-memory-research.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- MORE WORK ============================================================ -->
+  <!-- v4 B1, B2, B3. Sixteen entries in four tiers, fifteen distinct projects:
+       LCC appears in tier one and in tier two and each entry points at the
+       other, because the case study and the running instance are different
+       kinds of evidence. B1 needs twelve and passes at fifteen. The tier is
+       the claim:
+       measured, usable, readable, coursework. Every unit carries a name, a
+       line of what it is, and an anchor that is a number, a live link or a
+       repository link. D2 and D4: every link below was requested on
+       2026-09-10 and returned 200, and every repository link below is public.
+       Two Cloudflare hosts returned 530 that day and are not on this page.
+       E1: no forked or third party repository appears here. -->
+  <section class="band" id="more" aria-labelledby="more-h">
+    <div class="shell">
+      <p class="band-label">More work</p>
+      <h2 class="band-title" id="more-h">Sorted by how strong the evidence is.</h2>
+      <p class="lede">Tier one has numbers and captures behind it. Tier two you can open and
+      operate right now. Tier three is code you can read. Tier four is coursework and says so.
+      Sorting it this way costs me the flattering version and gives you the checkable one.</p>
+
+      <div class="tier reveal">
+        <h3 class="tier-h">Built and measured <span class="proj-idx">Tier 1</span></h3>
+        <p class="tier-note">The three systems above, in one line each. Every repository here
+        is private, so the case study carries the captures instead.</p>
+        <ul class="plist">
+          <li class="p-item">
+            <b class="p-name">TIE-OUT</b>
+            <p class="p-what">Chart of accounts mapping for roll ups, with a script that plants
+            an error to prove the checks fire. 124 tests.</p>
+            <div class="p-links">
+              <a class="badge-repo" href="work/tie-out/">Case study</a>
+            </div>
+            <span class="p-anchor">Private repository, so there is no code link.</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">Verity CRM Pipeline</b>
+            <p class="p-what">Unstructured sales notes turned into schema validated CRM
+            records, with a bounded correction loop and an audit record. 82 tests.</p>
+            <div class="p-links">
+              <a class="badge-repo" href="work/verity/">Case study</a>
+            </div>
+            <span class="p-anchor">Private repository, so there is no code link.</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">LCC Management System</b>
+            <p class="p-what">Membership and messaging, with authorisation and consent enforced
+            in Postgres rather than in route guards. 18 row level security policies.</p>
+            <div class="p-links">
+              <a class="badge-repo" href="work/lcc/">Case study</a>
+            </div>
+            <span class="p-anchor">Private repository. The live instance is in tier two.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tier reveal">
+        <h3 class="tier-h">Live and usable <span class="proj-idx">Tier 2</span></h3>
+        <p class="tier-note">Six links, each one requested on 2026-09-10 and each one a 200. I
+        have kept these lines to what you can confirm by clicking, because the numbers on this
+        page belong to the three systems above and I am not going to lend them out.</p>
+        <ul class="plist">
+          <li class="p-item">
+            <b class="p-name">precalc-1113</b>
+            <p class="p-what">A precalculus diagnostic that walks back down a prerequisite
+            graph to find the algebra underneath a wrong answer, and names the misconception
+            it thinks you applied. Static, offline capable, no backend, no sign in. No case
+            study; the running page is the artefact.</p>
+            <div class="p-links">
+              <a class="badge-live" href="https://javendean.github.io/precalc-1113/" target="_blank" rel="noopener">Open it</a>
+              <a class="badge-repo" href="https://github.com/Javendean/precalc-1113" target="_blank" rel="noopener">Code</a>
+            </div>
+            <span class="p-anchor">javendean.github.io/precalc-1113/</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">health-ch25-drills</b>
+            <p class="p-what">An offline first drill app for a ninth grade health chapter:
+            225 items in three question formats, behind a progress meter that never moves
+            backward. It opens straight to the drills.</p>
+            <div class="p-links">
+              <a class="badge-live" href="https://javendean.github.io/health-ch25-drills/" target="_blank" rel="noopener">Open it</a>
+              <a class="badge-repo" href="https://github.com/Javendean/health-ch25-drills" target="_blank" rel="noopener">Code</a>
+            </div>
+            <span class="p-anchor">javendean.github.io/health-ch25-drills/</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">Saturfun Itinerary</b>
+            <p class="p-what">A Brooklyn itinerary built as a scroll driven page: a Leaflet map,
+            and a Cloudflare Worker backend behind a shared photo wall with push notifications.</p>
+            <div class="p-links">
+              <a class="badge-live" href="https://javendean.github.io/Saturfun-Itinerary/" target="_blank" rel="noopener">Open it</a>
+            </div>
+            <span class="p-anchor">javendean.github.io/Saturfun-Itinerary/</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">vm-hygiene-report</b>
+            <p class="p-what">An incident write up, not a virtual machine report: the vm is
+            virtual memory. A Windows laptop with 15.8 GB of RAM exhausted a 63.8 GB commit
+            limit and killed two live sessions while its pagefile sat mostly empty. Measured
+            2026-08-31 from 2,921 telemetry samples over 10 days, and every figure carries a
+            tag saying whether I measured it. Marked noindex, so this link is the way in. No
+            case study; the report is the write up.</p>
+            <div class="p-links">
+              <a class="badge-live" href="https://javendean.github.io/vm-hygiene-report/" target="_blank" rel="noopener">Open it</a>
+            </div>
+            <span class="p-anchor">javendean.github.io/vm-hygiene-report/</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">Verbo</b>
+            <p class="p-what">A Spanish reading and practice app on its own host, built
+            around scripture text: a reader with tap to gloss, drills, a study pane and a
+            tutor tab, all of it in Spanish and all of it working offline once loaded. It
+            opens straight into the app, no sign in. The repository behind it is private, and
+            there is no case study for it on this site.</p>
+            <div class="p-links">
+              <a class="badge-live" href="https://verbo.verityautomated.com" target="_blank" rel="noopener">Open it</a>
+            </div>
+            <span class="p-anchor">verbo.verityautomated.com</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">LCC Management System</b>
+            <p class="p-what">The tier one system, in production. What you will see is the
+            login page. I am not going to hand out an account, so read this as proof that it
+            runs, not as a tour. The case study is linked here too, so you do not have to
+            scroll back up for it.</p>
+            <div class="p-links">
+              <a class="badge-live" href="https://lcc-management-system.vercel.app" target="_blank" rel="noopener">Open it</a>
+              <span class="badge-auth">Opens a login</span>
+              <a class="badge-repo" href="work/lcc/">Case study</a>
+            </div>
+            <span class="p-anchor">lcc-management-system.vercel.app</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tier reveal">
+        <h3 class="tier-h">Published code <span class="proj-idx">Tier 3</span></h3>
+        <p class="tier-note">Public repositories, readable in full. Each line below says what
+        the thing is, taken from the repository's own description or, where it has none, from
+        opening it and reading it on 2026-09-10. None of these has a case study on this site.
+        TIE-OUT, Verity, LCC, Verbo and OutreachForge are private and appear on this page
+        without code links, because a link into a private repository is a dead end.</p>
+        <ul class="plist">
+          <li class="p-item">
+            <b class="p-name">aimo-memory-research</b>
+            <p class="p-what">848 iterations. 73 submission attempts. Zero scored results. I
+            published it as a failure corpus, with four incident write ups, because the run
+            that produced nothing is the one I learned the most from, and deleting it would
+            make my record look better than it is. It is a negative result, published on
+            purpose. There is no case study for it on this site; the corpus is the write up,
+            and the four incident notes are inside it.</p>
+            <div class="p-links">
+              <a class="badge-repo" href="https://github.com/Javendean/aimo-memory-research" target="_blank" rel="noopener">Read the corpus</a>
+            </div>
+            <span class="p-anchor">github.com/Javendean/aimo-memory-research</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">AgentAIMO</b>
+            <p class="p-what">A math competition solver for an air gapped H100, and the
+            offline audit substrate that works out why it gets problems wrong: confidence is a
+            typed level that weights the answer vote, and a 21 code flaw taxonomy grades the
+            traces. Python. There is no case study for it on this site.</p>
+            <div class="p-links">
+              <a class="badge-repo" href="https://github.com/Javendean/AgentAIMO" target="_blank" rel="noopener">Code</a>
+            </div>
+            <span class="p-anchor">github.com/Javendean/AgentAIMO</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">SymPy-Olympiad-API</b>
+            <p class="p-what">A small Flask service that puts SymPy solve, simplify and
+            numeric evaluation behind HTTP endpoints, with input validation standing in front
+            of parse_expr. Python. There is no case study for it on this site.</p>
+            <div class="p-links">
+              <a class="badge-repo" href="https://github.com/Javendean/SymPy-Olympiad-API" target="_blank" rel="noopener">Code</a>
+            </div>
+            <span class="p-anchor">github.com/Javendean/SymPy-Olympiad-API</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">aimo-geometric-routing</b>
+            <p class="p-what">Written research, not a program. Seven directories of notes and
+            collected evidence on whether routing and representation geometry, rather than more
+            parameters, is what closes the gap on a math competition solver. The repository has
+            no description of its own, so this line comes from reading it. There is no case
+            study for it on this site.</p>
+            <div class="p-links">
+              <a class="badge-repo" href="https://github.com/Javendean/aimo-geometric-routing" target="_blank" rel="noopener">Code</a>
+            </div>
+            <span class="p-anchor">github.com/Javendean/aimo-geometric-routing</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">WiseMCP</b>
+            <p class="p-what">An asynchronous research agent on FastAPI that hands a model a
+            set of tools over HTTP, alongside the four planning documents that argued the stack
+            before any of it was written. Python. The repository has no description of its own,
+            so this line comes from reading it. There is no case study for it on this
+            site.</p>
+            <div class="p-links">
+              <a class="badge-repo" href="https://github.com/Javendean/WiseMCP" target="_blank" rel="noopener">Code</a>
+            </div>
+            <span class="p-anchor">github.com/Javendean/WiseMCP</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tier reveal">
+        <h3 class="tier-h">Coursework <span class="proj-idx">Tier 4</span></h3>
+        <p class="tier-note">Under its own heading, so the account reads honestly. Neither of
+        these is professional work, and the first of them is not work I designed. Neither has a
+        case study on this site.</p>
+        <ul class="plist">
+          <li class="p-item">
+            <b class="p-name">Machine-Learning-Labs</b>
+            <p class="p-what">Course labs in R Markdown, from a machine learning course in
+            spring 2022. The prompts and the scaffolding belong to the instructor, as the
+            repository README states, and the README also lists the exercises left incomplete.
+            What is mine is the work done inside it. There is no case study for it on this
+            site.</p>
+            <div class="p-links">
+              <a class="badge-repo" href="https://github.com/Javendean/Machine-Learning-Labs" target="_blank" rel="noopener">Code</a>
+            </div>
+            <span class="p-anchor">github.com/Javendean/Machine-Learning-Labs</span>
+          </li>
+          <li class="p-item">
+            <b class="p-name">Condo-and-Co-op-Pricing-Model</b>
+            <p class="p-what">My undergraduate final project, filed here rather than in tier
+            three because that is what it is: predicting sale prices for condos and co-ops sold
+            in Queens between February 2016 and February 2017, with linear models, regression
+            trees and random forests, scored on R squared, RMSE and MSE. Two files, the R
+            Markdown and the paper it renders. There is no case study for it on this site.</p>
+            <div class="p-links">
+              <a class="badge-repo" href="https://github.com/Javendean/Condo-and-Co-op-Pricing-Model" target="_blank" rel="noopener">Code</a>
+            </div>
+            <span class="p-anchor">github.com/Javendean/Condo-and-Co-op-Pricing-Model</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACKGROUND =========================================================== -->
+  <!-- v4 Part C, and the part of this page I was most careful with. C1: two
+       rows, two headings, never sharing a container. C2: the employment row
+       holds employers and a college, and no lab name appears in it. C3: the
+       mechanism is in the second row's heading and in the subhead directly
+       under it, not in a footnote. C4: the six engagement verbs it bans are
+       absent from this section, including from this comment, so the grep it
+       specifies runs clean. C5: no logos, text only. C7: no Outlier figure,
+       because names and mechanism are better than a number I cannot show. -->
+  <section class="band" aria-labelledby="bg-h">
+    <div class="shell">
+      <p class="band-label">Background</p>
+      <h2 class="band-title" id="bg-h">Two different claims, kept apart.</h2>
+      <p class="lede">The first row is who has employed me and where I studied. The second row
+      is model evaluation work I did through my job at Outlier AI. They sit in separate rows
+      because they are not the same kind of claim, and running them together would overstate
+      the second one. My résumé is not linked from this page: one of its bullets puts the lab
+      names next to a verb this section exists to refuse, and I would rather drop the link than
+      ship a page that argues with its own attachment. Ask me and I will send you the corrected
+      one.</p>
+
+      <div class="creds">
+        <div class="cred-row reveal">
+          <h3 class="cred-h">Employment and study</h3>
+          <p class="tier-note">Direct employment, and the college I attended.</p>
+          <ul class="cred-list">
+            <li>
+              <b class="p-name">Outlier AI</b>
+              <p class="p-what">Quantitative analyst, remote. June 2024 to present.</p>
+            </li>
+            <li>
+              <b class="p-name">Morgan Stanley</b>
+              <p class="p-what">Technical business analyst, Manhattan NY. September 2022 to
+              June 2024.</p>
+            </li>
+            <li>
+              <b class="p-name">VP Records</b>
+              <p class="p-what">Technical business analyst, New York NY. February 2022 to
+              September 2022.</p>
+            </li>
+            <li>
+              <b class="p-name">CUNY Queens College</b>
+              <p class="p-what">MS Risk Management, Actuarial Sciences, GPA 3.83. BA Applied
+              Mathematics.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cred-row reveal">
+          <h3 class="cred-h">Model evaluation work, through Outlier AI</h3>
+          <!-- v4 C6. This used to end "employed me, engaged me, or received
+               anything from me". The third clause was not in FACTS.md and is
+               very likely false: supplying annotated data to labs is what
+               Outlier AI does, so the work I did on those projects went to
+               them through my employer. An over-reaching denial that a reader
+               who knows the industry can see through costs more than it buys,
+               on the one section where credibility is the product. -->
+          <p class="tier-note">Through my job at Outlier AI I annotated and evaluated model
+          output on high priority projects for the labs named below. Outlier AI employs me.
+          None of these labs employed me or contracted me. If you take one thing from this
+          row, take that my relationship is with Outlier AI and not with any name in it.</p>
+          <ul class="cred-list">
+            <li>
+              <b class="p-name">OpenAI</b>
+              <p class="p-what">Annotation and evaluation of model output, on Outlier AI
+              projects.</p>
+            </li>
+            <li>
+              <b class="p-name">Anthropic</b>
+              <p class="p-what">Annotation and evaluation of model output, on Outlier AI
+              projects.</p>
+            </li>
+            <li>
+              <b class="p-name">Google</b>
+              <p class="p-what">Annotation and evaluation of model output, on Outlier AI
+              projects.</p>
+            </li>
+            <li>
+              <b class="p-name">Meta</b>
+              <p class="p-what">Annotation and evaluation of model output, on Outlier AI
+              projects.</p>
+            </li>
+            <li>
+              <b class="p-name">DeepSeek</b>
+              <p class="p-what">Annotation and evaluation of model output, on Outlier AI
+              projects.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- VERIFIED FACTS ======================================================= -->
   <section class="band" aria-labelledby="facts-h">
     <div class="shell">
@@ -535,8 +965,9 @@
     <a href="about/">About</a>
     <a href="https://www.linkedin.com/in/javendean-naipaul-229b11169/" target="_blank" rel="noopener">LinkedIn</a>
     <a href="https://github.com/Javendean" target="_blank" rel="noopener">GitHub</a>
-    <a href="files/CapitalOne_JavendeanNaipaul_Resume.pdf">Résumé, PDF</a>
   </div>
+  <!-- v4 C6, second half of the same removal as the hero. The Background
+       section's lede says why, in prose, where the reader forms the belief. -->
 </footer>
 
 <!-- v3 Part I. The ichthys loader's shell, in the markup rather than written

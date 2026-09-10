@@ -1,9 +1,7 @@
-/* v2.css - front door for javendeannaipaul. index.html only; style.css and
-   the evidence pages are untouched (A7). Colour ratios are measured and
-   recorded beside their tokens. Deviations are recorded where they happen:
-   F2, F3, B5 in section 14, S4 in section 13. v2 I1 caps this file at 24,576
-   bytes and X7 keeps it, since X2 re-set the JS budget and said nothing about
-   CSS, so three new sections came out of line breaks and commentary. */
+/* v2.css - front door, index.html only; style.css and the evidence pages are
+   untouched (A7). Ratios are measured, beside their tokens. Deviations: F2,
+   F3, B5 in 14, S4 in 13. I1 caps this at 24,576 bytes, so section 20 was
+   paid for out of prose and out of declarations written six times over. */
 
 /* 1. RESET */
 
@@ -14,7 +12,7 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth;
 
 body, h1, h2, h3, h4, p, figure, blockquote, ul, ol, dl, dd, pre { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
-img, svg, canvas, video { display: block; max-width: 100%; }
+img, svg, canvas, video, picture { display: block; max-width: 100%; }
 img { height: auto; }
 a { color: inherit; }
 button, input, textarea, select { font: inherit; color: inherit; }
@@ -24,21 +22,23 @@ button, input, textarea, select { font: inherit; color: inherit; }
 :root {
   /* ground (B1) */
   --base:    #0B0C0E;
-  --surface: #121417; /* 1.06 vs base - elevation, never a text pairing */
+  --surface: #121417; /* 1.06 vs base */
 
-  /* text, measured on base then surface */
-  --text-1: #F2F4F6; /* headings   17.75 base, 16.73 surf */
-  --text-2: #AEB6BE; /* body        9.54 base,  8.99 surf */
-  --text-3: #8E97A1; /* micro/meta  6.61 base,  6.23 surf */
+  /* text; each ratio is on --base, then on --surface (B4) */
+  --text-1: #F2F4F6; /* headings 17.75, 16.73 */
+  --text-2: #AEB6BE; /* body      9.54,  8.99 */
+  --text-3: #8E97A1; /* micro     6.61,  6.23 */
 
   /* accent (B2: one), hue 193.0. B3 reserves green and red. */
-  --accent:      #5CC8E6;              /* 10.12 base, 9.54 surf */
-  --accent-line: rgba(92,200,230,.55); /* 3.70 base, over B4's 3:1 */
+  --accent:      #5CC8E6;              /* 10.12, 9.54 */
+  --accent-line: rgba(92,200,230,.55); /* 3.70, over B4's 3:1 */
 
   /* hairlines (D3: alpha-white). J7: .10 dies in a dark room. */
-  --edge:    rgba(255,255,255,.10); /* 1.26 - separation, not meaning */
-  --edge-2:  rgba(255,255,255,.16); /* 1.54 - card rings, structural grids */
-  --edge-ui: rgba(255,255,255,.38); /* 3.53 - interactive borders */
+  --edge:    rgba(255,255,255,.10); /* 1.26 */
+  --edge-2:  rgba(255,255,255,.16); /* 1.54 */
+  --edge-ui: rgba(255,255,255,.38); /* 3.53, interactive */
+  --hair:   1px solid var(--edge);
+  --hair-2: 1px solid var(--edge-2);
 
   --shadow: 0 18px 44px -24px rgba(0,0,0,.75);
 
@@ -49,23 +49,23 @@ button, input, textarea, select { font: inherit; color: inherit; }
           "Liberation Mono", "Courier New", monospace;
 
   /* C2: eleven steps; 147.8px at 1440, over C1's 120. */
-  --fs-display: clamp(2.75rem, 0.60rem + 9.60vw, 10.5rem);
-  --fs-xxl:  clamp(2.25rem, 1.15rem + 4.90vw, 5.5rem);
-  --fs-xl:   clamp(1.85rem, 1.15rem + 3.10vw, 3.75rem);
-  --fs-lg:   clamp(1.50rem, 1.05rem + 2.00vw, 2.5rem);
-  --fs-md:   clamp(1.25rem, 1.05rem + 0.90vw, 1.75rem);
-  --fs-lede: clamp(1.0625rem, 0.98rem + 0.42vw, 1.3125rem);
-  --fs-body: clamp(1rem, 0.96rem + 0.20vw, 1.125rem);
-  --fs-data: 0.9375rem;
-  --fs-code: clamp(0.8125rem, 0.78rem + 0.16vw, 0.9375rem);
-  --fs-micro: 0.75rem;  --fs-nano: 0.6875rem;
+  --fs-display: clamp(2.75rem, .6rem + 9.6vw, 10.5rem);
+  --fs-xxl:  clamp(2.25rem, 1.15rem + 4.9vw, 5.5rem);
+  --fs-xl:   clamp(1.85rem, 1.15rem + 3.1vw, 3.75rem);
+  --fs-lg:   clamp(1.5rem, 1.05rem + 2vw, 2.5rem);
+  --fs-md:   clamp(1.25rem, 1.05rem + .9vw, 1.75rem);
+  --fs-lede: clamp(1.0625rem, .98rem + .42vw, 1.3125rem);
+  --fs-body: clamp(1rem, .96rem + .2vw, 1.125rem);
+  --fs-data: .9375rem;
+  --fs-code: clamp(.8125rem, .78rem + .16vw, .9375rem);
+  --fs-micro: .75rem;  --fs-nano: .6875rem;
 
   /* C4 >=.12em; C5 <=-0.02em, <=1.05 */
-  --track-display: -0.035em; --track-tight: -0.02em;
-  --track-micro: 0.14em;     --lead-display: 0.92;
+  --track-display: -.035em; --track-tight: -.02em;
+  --track-micro: .14em;     --lead-display: .92;
 
-  --s1: 0.25rem; --s2: 0.5rem; --s3: 0.75rem; --s4: 1rem; --s5: 1.5rem;
-  --s6: 2rem; --s7: 3rem; --s8: 4rem; --s9: 6rem;
+  --s1: .25rem; --s2: .5rem; --s3: .75rem; --s4: 1rem; --s5: 1.5rem;
+  --s6: 2rem; --s7: 3rem; --s8: 4rem;
   --band-y: clamp(4.5rem, 2rem + 7vw, 11rem);
 
   /* D1: nothing over 8px except media, capped at 12px */
@@ -73,11 +73,11 @@ button, input, textarea, select { font: inherit; color: inherit; }
 
   --measure: 66ch; /* C6 */
   --maxw: 1320px;
-  --gutter: clamp(1.25rem, 0.6rem + 2.4vw, 3.5rem);
+  --gutter: clamp(1.25rem, .6rem + 2.4vw, 3.5rem);
   --bar-h: 64px;
 
   --ease: cubic-bezier(.22,.61,.36,1); /* F3: 200-600ms, one curve */
-  --t-fast: 200ms;
+  --t-fast: 200ms;  --tr: var(--t-fast) var(--ease);
 
   color-scheme: dark;
 }
@@ -88,7 +88,7 @@ body {
   background: var(--base); color: var(--text-2);
   font-family: var(--sans); font-size: var(--fs-body); line-height: 1.65;
   font-synthesis-weight: none; -webkit-font-smoothing: antialiased;
-  font-variant-numeric: tabular-nums lining-nums; /* C8, inherited */
+  font-variant-numeric: tabular-nums lining-nums; /* C8 */
   overflow-x: clip;
 }
 
@@ -97,22 +97,22 @@ h1, h2, h3, h4 {
   letter-spacing: var(--track-tight); text-wrap: balance; /* C7 */
 }
 
-p, .fact-l, .hero-figure-l, .hero-meta li { text-wrap: pretty; }
+p, .fact-l, .m-l, .hero-figure-l, .hero-meta li { text-wrap: pretty; }
 
-strong, b { color: var(--text-1); font-weight: 600; }
+strong, b, .p-name { color: var(--text-1); font-weight: 600; }
 
-.hero-title, .closer-q { font-variant-numeric: normal; } /* C8 opt-out */
+.hero-title, .closer-q { font-variant-numeric: normal; } /* C8 */
 
 .skip, .brand, .topnav a, .band-label, .hero-eyebrow, .proj-idx, .proj-link,
 .scrollcue { font-family: var(--mono); font-size: var(--fs-micro);
   letter-spacing: var(--track-micro); text-transform: uppercase; }
 
 /* I8: not uppercased; Chromium exposes the transformed string. */
-.hero-meta, .proj-tag, .tech, .foot, .loader-label { font-family: var(--mono);
-  font-size: var(--fs-micro); letter-spacing: .04em; }
-
-.hero-figure-n, .fact-n, .closer-mail, .term-head, .term-body {
-  font-family: var(--mono); }
+.hero-meta, .proj-tag, .tech, .cap-chip, .p-anchor, .foot, .loader-label,
+.badge-live, .badge-repo, .badge-auth,
+.hero-figure-n, .fact-n, .m-n, .closer-mail, .term-head, .term-body {
+  font-family: var(--mono); font-size: var(--fs-micro);
+  letter-spacing: .04em; }
 
 .hero-title, .band-title, .proj-name, .closer-q {
   font-weight: 650; letter-spacing: var(--track-display); }
@@ -126,6 +126,17 @@ strong, b { color: var(--text-1); font-weight: 600; }
 :focus:not(:focus-visible) { outline: none; }
 
 /* 4. UTILITIES */
+
+/* Grouped affordances: one centred flex box, no underline, and G6's 44px
+   carried once for the four bar and CTA targets. */
+.brand, .topnav a, .proj-link, .hero-meta a, .foot-links a,
+.badge-live, .badge-repo, .badge-auth {
+  display: inline-flex; align-items: center; text-decoration: none; }
+.brand, .topnav a, .proj-link, .scrollcue { min-height: 44px; } /* G6 */
+
+.hero-meta, .proj-top, .proj-tech, .caps, .foot, .foot-links, .p-links,
+.tier-h { display: flex; flex-wrap: wrap; }
+.proj-top, .foot, .tier-h { align-items: baseline; }
 
 /* G2, first in tab order. clip-path, not opacity (A2). */
 .skip {
@@ -158,32 +169,22 @@ strong, b { color: var(--text-1); font-weight: 600; }
 .topbar {
   position: fixed; inset: 0 0 auto 0; z-index: 100; height: var(--bar-h);
   display: flex; align-items: center; gap: var(--s5);
-  padding-inline: var(--gutter); border-bottom: 1px solid var(--edge);
+  padding-inline: var(--gutter); border-bottom: var(--hair);
   background: rgba(11,12,14,.86);
   backdrop-filter: blur(12px) saturate(130%);
   -webkit-backdrop-filter: blur(12px) saturate(130%);
 }
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .topbar { background: var(--base); }
+@supports not (backdrop-filter: blur(1px)) {
+  .topbar { background: var(--base); } /* -webkit- only: opaque, no blur */
 }
 
-.brand {
-  display: inline-flex; align-items: center;
-  min-height: 44px;
-  margin-right: auto; white-space: nowrap;
-  color: var(--text-1); text-decoration: none;
-}
+.brand { margin-right: auto; white-space: nowrap; color: var(--text-1); }
 
 .topnav { display: flex; align-items: center; gap: var(--s1); }
 
-.topnav a {
-  display: inline-flex; align-items: center;
-  min-height: 44px; /* G6 */
-  padding-inline: var(--s3);
-  border-radius: var(--r-sm); /* D1: never a pill */
-  color: var(--text-2); text-decoration: none;
-  transition: color var(--t-fast) var(--ease);
-}
+.topnav a { padding-inline: var(--s3);
+  border-radius: var(--r-sm);
+  color: var(--text-2); transition: color var(--tr); }
 .topnav a:hover { color: var(--accent); }
 
 .brand[aria-current], .topnav a[aria-current] {
@@ -199,16 +200,15 @@ strong, b { color: var(--text-1); font-weight: 600; }
 
 /* 6. HERO */
 
-/* B5's one gradient, aimed by P5, which is a seam check. Focused at 78% 18%
-   it lit the crown's ground to rgb(27,39,44) against portrait darks seated on
-   --base, rgb(11,12,14), and no asset closes 25 luminance levels. It now
-   reaches zero at 56% of the width, left of the portrait at 68% (1440) and
-   56% (2560). */
+/* B5's one gradient, aimed by P5's seam check. At 78% 18% it lit the crown's
+   ground to rgb(27,39,44) against portrait darks on --base rgb(11,12,14), 25
+   levels apart. Zero now at 56% of the width, left of the portrait's 68% at
+   1440 and 56% at 2560. */
 .hero {
   position: relative; isolation: isolate; overflow: clip;
   display: flex; align-items: center; min-height: min(100svh, 940px);
   padding-block: calc(var(--bar-h) + var(--s8)) var(--s8);
-  border-bottom: 1px solid var(--edge);
+  border-bottom: var(--hair);
   background: radial-gradient(47% 78% at 22% 16%,
     rgba(92,200,230,.13) 0%, rgba(92,200,230,.05) 38%, rgba(11,12,14,0) 72%);
 }
@@ -217,24 +217,26 @@ strong, b { color: var(--text-1); font-weight: 600; }
   display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s6); }
 
 @media (min-width: 900px) {
-  /* P8 wants 500 CSS px; the lane funds it. */
+  /* P8 wants 500 CSS px. */
   .hero-inner { align-items: center; grid-template-columns:
       minmax(0, 1fr) clamp(180px, 17vw, 280px) clamp(240px, 27vw, 500px); }
   .hero-lane { min-height: 0; align-self: stretch; }
+  .hero-pic, .hero-portrait { justify-self: end; }
 }
 
 .hero-lane { position: relative; overflow: hidden;
   min-height: clamp(220px, 62vw, 320px); }
 
-.hero-canvas, .hero-still { position: absolute; inset: 0;
-  width: 100%; height: 100%; pointer-events: none; }
+.hero-canvas, .hero-still, .ground-c { position: absolute; inset: 0;
+  width: 100%; height: 100%; }
+.hero-canvas, .hero-still { pointer-events: none; }
 
 .hero-eyebrow { display: inline-flex; align-items: center; gap: var(--s3);
   margin-bottom: var(--s5); color: var(--accent); }
 .hero-eyebrow::before { content: ""; width: 28px; height: 1px;
   background: var(--accent-line); }
 
-.hero-title { margin: 0; font-size: var(--fs-display);
+.hero-title { font-size: var(--fs-display);
   line-height: var(--lead-display); color: var(--text-1);
   overflow-wrap: break-word; }
 .hero-title em { font-style: normal; color: var(--accent); }
@@ -243,51 +245,41 @@ strong, b { color: var(--text-1); font-weight: 600; }
 
 .hero-figure { max-width: 46ch; margin-top: var(--s6); }
 
-.hero-figure-n, .fact-n {
-  display: block; font-weight: 700; line-height: 1.05;
-  letter-spacing: var(--track-tight);
-  color: var(--text-1);
-}
+.hero-figure-n, .fact-n, .m-n { display: block; font-weight: 700;
+  line-height: 1.05; letter-spacing: var(--track-tight); color: var(--text-1); }
 .hero-figure-n { font-size: var(--fs-lg); }
-.fact-n { font-size: var(--fs-md); white-space: nowrap; }
+.fact-n, .m-n { font-size: var(--fs-md); }
+.fact-n { white-space: nowrap; } /* a B5 figure wraps (X3) */
 
-.hero-figure-l, .fact-l { display: block; margin-top: var(--s3);
-  font-size: var(--fs-data); line-height: 1.5; }
-.hero-figure-l { color: var(--text-3); }
-.fact-l { max-width: 30ch; color: var(--text-2); }
+.hero-figure-l, .fact-l, .m-l, .p-anchor { display: block;
+  margin-top: var(--s3); font-size: var(--fs-data); line-height: 1.5; }
+.hero-figure-l, .p-anchor { color: var(--text-3); }
+.fact-l, .m-l { max-width: 30ch; color: var(--text-2); }
 
-.proj-shot { width: 100%; border: 1px solid var(--edge-2);
-  border-radius: var(--r-media); box-shadow: var(--shadow); }
+.proj-shot { width: 100%; background: var(--surface);
+  border: var(--hair-2); border-radius: var(--r-media);
+  box-shadow: var(--shadow); }
 
-/* Part P. The portrait ends by ending: NO border, radius, background, ring
-   or shadow. Verified on the SHIPPED files, both formats, because the encode
-   broke this before: bottom row and both crop edges at alpha 0.00, darkest 1%
-   of opaque pixels on --base. P7's <picture> would otherwise be the grid item,
-   so both selectors carry the ceiling. */
+/* Part P. No border, radius, background, ring or shadow. Verified on the
+   SHIPPED files, both formats: bottom row and both crop edges at alpha 0.00,
+   darkest 1% of opaque pixels on --base. P7's <picture> would be the grid
+   item, so both carry it. */
 .hero-portrait { width: 100%; }
-.hero-pic { display: block; }
 .hero-pic, .hero-portrait { max-width: 500px; justify-self: start; }
-@media (min-width: 900px) {
-  .hero-pic, .hero-portrait { justify-self: end; }
-}
-
-.hero-meta {
-  display: flex; flex-wrap: wrap; gap: var(--s3) var(--s5);
-  max-width: 46ch; margin-top: var(--s6); padding-top: var(--s5);
-  border-top: 1px solid var(--edge); color: var(--text-3);
-}
+.hero-meta { gap: var(--s3) var(--s5); max-width: 46ch;
+  margin-top: var(--s6); padding-top: var(--s5);
+  border-top: var(--hair); color: var(--text-3); }
 
 .scrollcue {
   position: absolute; left: var(--gutter); bottom: var(--s6); z-index: 1;
   display: flex; align-items: center; gap: var(--s3);
-  min-height: 44px; /* G6 */
   font-size: var(--fs-nano); color: var(--text-3);
 }
 @media (max-width: 899px) { .scrollcue { display: none; } }
 
 /* 7. BANDS */
 
-.band { padding-block: var(--band-y); border-bottom: 1px solid var(--edge); }
+.band { padding-block: var(--band-y); border-bottom: var(--hair); }
 .band:last-of-type { border-bottom: 0; }
 .band-label { display: block; margin-bottom: var(--s5); color: var(--text-3); }
 .band-title { max-width: 22ch; font-size: var(--fs-xl); line-height: 1.02; }
@@ -297,32 +289,34 @@ strong, b { color: var(--text-1); font-weight: 600; }
 /* 8. CAPABILITIES */
 
 /* J7: the 1px gaps ARE the structure; .10 is 1.22:1. */
-.cap-list, .facts { display: grid; gap: 1px; margin-top: var(--s8);
-  background: var(--edge-2); }
-.cap-list { border-block: 1px solid var(--edge-2);
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.cap-list, .plist, .cred-list, .facts, .grid-m { display: flex;
+  flex-wrap: wrap; gap: 1px; margin-top: var(--s8);
+  background: var(--edge-2); } /* flex, so a short last row still fills */
+.cap-list, .plist, .cred-list { border-block: var(--hair-2); }
 
-.cap { padding: var(--s6) var(--s5) var(--s7); background: var(--base); }
-.cap-h { font-size: var(--fs-md); font-weight: 600; line-height: 1.15; }
-.cap-p { max-width: 42ch; margin-top: var(--s3); font-size: var(--fs-data);
-  line-height: 1.6; color: var(--text-2); }
+.cap, .p-item, .cred-list li { flex: 1 1 16rem; min-width: 0;
+  padding: var(--s6) var(--s5) var(--s7); background: var(--base); }
+.cap-h, .tier-h, .cred-h { font-size: var(--fs-md); font-weight: 600;
+  line-height: 1.15; }
+.cap-p, .tier-note, .p-what { max-width: 42ch; margin-top: var(--s3);
+  font-size: var(--fs-data); line-height: 1.6; color: var(--text-2); }
 
 /* 9. PROJECTS */
 
-.work { display: grid; gap: var(--band-y); margin-top: var(--s8); }
+.work, .creds { display: grid; gap: var(--band-y); margin-top: var(--s8); }
 
 .proj { display: grid; gap: var(--s7); padding-top: var(--s7);
-  border-top: 1px solid var(--edge-2); }
+  border-top: var(--hair-2); }
 
 @media (min-width: 1000px) {
   .proj { grid-template-columns: minmax(0, 27rem) minmax(0, 1fr);
-    gap: var(--s9); align-items: start; }
+    gap: 6rem; align-items: start; }
   .proj-media { position: sticky; top: calc(var(--bar-h) + var(--s5)); }
 }
 
 .proj-idx { color: var(--text-3); }
-.proj-top { display: flex; flex-wrap: wrap; align-items: baseline;
-  gap: var(--s3) var(--s5); margin-top: var(--s3); }
+.proj-top, .tier-h, .p-links { gap: var(--s3) var(--s5);
+  margin-top: var(--s3); }
 .proj-name { font-size: var(--fs-lg); line-height: 1.04; }
 .proj-tag { color: var(--text-3); }
 
@@ -333,39 +327,33 @@ strong, b { color: var(--text-1); font-weight: 600; }
   display: grid; gap: var(--s4); color: var(--text-2); }
 
 .proj-media { display: grid; gap: var(--s5); min-width: 0; }
-.proj-shot { background: var(--surface); }
-.proj-tech { display: flex; flex-wrap: wrap; gap: var(--s2);
-  margin-top: var(--s6); }
+.proj-tech, .caps { gap: var(--s2); margin-top: var(--s6); }
 
-.tech {
-  padding: var(--s1) var(--s3); border: 1px solid var(--edge);
+.tech, .cap-chip {
+  padding: var(--s1) var(--s3); border: var(--hair);
   border-radius: var(--r-sm); font-size: var(--fs-nano);
   white-space: nowrap; color: var(--text-3);
 }
 
-.proj-link {
-  display: inline-flex; align-items: center; gap: var(--s2);
-  min-height: 44px; /* G6 */
-  margin-top: var(--s5); padding: var(--s2) var(--s4);
-  border: 1px solid var(--edge-ui); /* 3.53, sole boundary so B4 needs 3:1 */
-  border-radius: var(--r); color: var(--text-1); text-decoration: none;
-  transition: border-color var(--t-fast) var(--ease),
-              color var(--t-fast) var(--ease);
-}
-.proj-link:hover { color: var(--accent); border-color: var(--accent);
-  background: rgba(92,200,230,.10); }
+.proj-link, .badge-live, .badge-repo, .badge-auth {
+  gap: var(--s2); margin-top: var(--s5); padding: var(--s2) var(--s4);
+  border: 1px solid var(--edge-ui); /* 3.53, B4 wants 3:1 here */
+  border-radius: var(--r); color: var(--text-1);
+  transition: border-color var(--tr), color var(--tr); }
+.proj-link:hover, .badge-live:hover, .badge-repo:hover { color: var(--accent);
+  border-color: var(--accent); background: rgba(92,200,230,.10); }
 
 /* 10. TERMINAL - B3 lives here only: --pass and --fail are defined on .term
-   and used only in .term-scoped selectors. */
+   and used only inside it. Every ratio below is on --term-bg. */
 
 .term {
   --term-bg:   var(--surface);
   --term-head: #182027;
-  --term-rule: rgba(255,255,255,.16); /* D3, matches --edge-2 */
-  --term-fg:   #DBE3EA; /* 14.22 on --term-bg */
-  --term-dim:  #939FA9; /*  6.83 on --term-bg */
-  --pass:      #5FC98A; /*  8.97 on --term-bg, verdict PASS */
-  --fail:      #F2777A; /*  6.76 on --term-bg, verdict FAIL */
+  --term-rule: rgba(255,255,255,.16); /* = --edge-2 */
+  --term-fg:   #DBE3EA; /* 14.22 */
+  --term-dim:  #939FA9; /*  6.83 */
+  --pass:      #5FC98A; /*  8.97, verdict PASS */
+  --fail:      #F2777A; /*  6.76, verdict FAIL */
 
   background: var(--term-bg); border: 1px solid var(--term-rule);
   border-radius: var(--r-lg);
@@ -377,7 +365,7 @@ strong, b { color: var(--text-1); font-weight: 600; }
   padding: var(--s3) var(--s4); background: var(--term-head);
   border-bottom: 1px solid var(--term-rule);
   font-size: var(--fs-micro); letter-spacing: .02em;
-  overflow-wrap: anywhere; color: #9AA5B1; /* 6.58 on --term-head */
+  overflow-wrap: anywhere; color: #9AA5B1; /* 6.58 on head */
 }
 
 .term-body {
@@ -394,59 +382,50 @@ strong, b { color: var(--text-1); font-weight: 600; }
 .term .g   { color: var(--pass); }
 .term .r   { color: var(--fail); font-weight: 700; }
 .term .dim { color: var(--term-dim); }
-.term .w   { color: #FFFFFF; font-weight: 700; } /* 18.45 on --term-bg */
+.term .w   { color: #FFFFFF; font-weight: 700; } /* 18.45 */
 
 /* 11. FACTS */
 
-.facts { border: 1px solid var(--edge-2); border-radius: var(--r-lg);
-  overflow: hidden;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
-.fact { padding: var(--s6) var(--s5); background: var(--surface); }
+.facts, .grid-m { border: var(--hair-2); border-radius: var(--r-lg);
+  overflow: hidden; }
+.fact, .m-cell { flex: 1 1 12rem; min-width: 0;
+  padding: var(--s6) var(--s5); background: var(--surface); }
 
 /* 12. CLOSER AND FOOT */
 
 .closer { padding-block: var(--band-y); }
-.closer-q { max-width: 18ch; font-size: var(--fs-xxl); line-height: 0.98; }
+.closer-q { max-width: 18ch; font-size: var(--fs-xxl); line-height: .98; }
 
 .closer-mail {
   display: inline-block; margin-top: var(--s7); padding-bottom: var(--s2);
   border-bottom: 1px solid var(--accent-line);
   font-size: var(--fs-md); letter-spacing: var(--track-tight);
-  text-decoration: none; overflow-wrap: break-word;
-  color: var(--accent);
-  transition: border-color var(--t-fast) var(--ease);
+  text-decoration: none; overflow-wrap: break-word; color: var(--accent);
+  transition: border-color var(--tr);
 }
 .closer-mail:hover { border-bottom-color: var(--accent); }
 
-.foot {
-  display: flex; flex-wrap: wrap; align-items: baseline;
-  justify-content: space-between; gap: var(--s4) var(--s6);
-  padding-block: var(--s6) var(--s8); border-top: 1px solid var(--edge);
-  color: var(--text-3);
-}
-.foot-links { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); }
+.foot { justify-content: space-between; gap: var(--s4) var(--s6);
+  padding-block: var(--s6) var(--s8); border-top: var(--hair);
+  color: var(--text-3); }
+.foot-links, .p-links { gap: var(--s2) var(--s5); }
 
-.hero-meta a, .foot-links a {
-  display: inline-flex; align-items: center;
-  min-height: 24px; /* G6 */
-  color: var(--text-2); text-decoration: none;
+.hero-meta a, .foot-links a { min-height: 24px; color: var(--text-2);
   box-shadow: inset 0 -1px 0 var(--edge-ui); /* 3.53 underline */
-  transition: color var(--t-fast) var(--ease),
-              box-shadow var(--t-fast) var(--ease);
-}
+  transition: color var(--tr), box-shadow var(--tr); }
 .hero-meta a:hover, .foot-links a:hover { color: var(--accent);
   box-shadow: inset 0 -1px 0 var(--accent); }
 
-/* 13. SCROLL NARRATIVE - Part S. Sticky child (S2), composited, never
-   `fixed`. S5 is the atom that ships broken, so .narr-w is BORN FINISHED at
-   opacity 1 and --text-1 and the staging is added behind two gates: S5, S6
-   and S7 all fall out of that. S12: nothing focusable in here. */
+/* 13. SCROLL NARRATIVE - Part S. Sticky child (S2), never `fixed`. S5 is the
+   atom that ships broken, so .narr-w is BORN FINISHED at opacity 1 and
+   --text-1 and the staging goes behind two gates. S6, S7 fall out of that.
+   S12: nothing focusable. */
 
 .narr {
   position: relative;
   height: 800vh; /* S1: 8vh, inside the 6-to-10 window */
   height: 800svh; /* svh <= innerHeight: the ratio cannot pass 10 */
-  border-bottom: 1px solid var(--edge);
+  border-bottom: var(--hair);
 }
 
 .narr-sticky {
@@ -467,23 +446,20 @@ strong, b { color: var(--text-1); font-weight: 600; }
 .narr-w { color: var(--text-1); }
 
 /* S8: colour and opacity only. The floor, --text-3 at .78, composites to
-   #717881: 4.38:1 on --base, 4.09:1 on the living ground here (mean
-   rgb(20,21,23)) and 3.05:1 on its brightest grain pixel rgb(45,46,48). The
-   first draft's .62 read 3.17 on --base but 2.96 over grain. S9 rests on it. */
+   #717881: 4.38 on --base, 4.09 on the living ground (mean rgb(20,21,23)),
+   3.05 on its brightest grain rgb(45,46,48). The .62 draft read 3.17 on
+   --base but 2.96 over grain. S9 rests on it. */
 @keyframes narr-word {
   from { opacity: .78; color: var(--text-3); }
   to   { opacity: 1;   color: var(--text-1); }
 }
 
 /* S4 names `scroll()`, whose timeline is the document: a word's slice would
-   be a percentage of the whole document scroll, measurable only in JS and only
-   by re-measuring, since removing the loader changes the height under it. X2
-   has single-digit bytes left, so this is a named VIEW timeline on the same
-   scroller. `contain` is .narr's top meeting the viewport top through its
-   bottom meeting the viewport bottom: the 6,300px the sticky child is pinned
-   for at 1440x900, self-measuring and unable to drift. --i is the span's index
-   (S3): word i opens at 2i% over 14%, so seven light at once and the 44th
-   finishes at 100%. */
+   be a share of the whole document scroll, measurable only in JS and only by
+   re-measuring after the loader changes the height. So: a named VIEW timeline
+   on the same scroller, `contain` being the 6,300px the sticky child is
+   pinned for at 1440x900. --i is the span index (S3): word i opens at 2i%
+   over 14%, so seven light at once and the 44th ends at 100%. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .narr { view-timeline: --narr block; }
@@ -495,17 +471,16 @@ strong, b { color: var(--text-1); font-weight: 600; }
   }
 }
 
-/* 14. LIVING GROUND - Part L. z-index -1 paints after the canvas background
-   and before every in-flow box: above --base, under all content (L10), and
-   nothing else needs a z-index. */
+/* 14. LIVING GROUND - Part L. z-index -1 paints above --base and under every
+   in-flow box (L10). */
 
 .ground {
   position: fixed; inset: 0; z-index: -1;
   pointer-events: none; /* L9, with aria-hidden in the markup */
 
-     /* L8: the JS-off stand-in, UNDER the live canvas, which is why L7 needs no
-     rule. Three co-prime dot tiles, 3/5/7px, repeating every 105px; peak
-     stacked alpha .083 over ~13% of the plane, under one level mean (L4). */
+  /* L8: the JS-off stand-in, UNDER the live canvas, so L7 needs no rule.
+     Three co-prime dot tiles, 3/5/7px, every 105px; peak stacked alpha .083
+     over ~13% of the plane, under a one level mean (L4). */
   background-image:
     radial-gradient(rgba(255,255,255,.035) .5px, transparent .5px),
     radial-gradient(rgba(255,255,255,.028) .5px, transparent .5px),
@@ -514,13 +489,10 @@ strong, b { color: var(--text-1); font-weight: 600; }
   background-position: 0 0, 1px 2px, 3px 1px;
 }
 
-.ground-c { position: absolute; inset: 0; width: 100%; height: 100%; }
 
 /* 15. ICHTHYS LOADER - Part I. I6 is a yes/no question and `display` answers
-   it: the overlay ships in the markup at display:none and only .loader-on
-   shows it. v2.js writes that class and is deferred, so it lands after
-   parsing, over an already-painted hero. An earlier comment here claimed an
-   inline <head> script that has never existed here. */
+   it: the overlay ships at display:none, only .loader-on shows it, and v2.js
+   is deferred, so the class lands after parsing over a painted hero. */
 
 .loader {
   display: none; position: fixed; inset: 0;
@@ -541,16 +513,34 @@ strong, b { color: var(--text-1); font-weight: 600; }
 
 .loader-label { color: var(--text-3); }
 
+/* 20. PRESENTATION - Parts B, C, D. New structures, no new tokens (A2, D1).
+   B4's strip is .proj-tech holding .tech chips, B5's grid is .facts, and B3's
+   units are .cap-list's hairline grid, joined by name in 8, 9 and 11. */
+
+/* B2 and C1: a labelled claim carrying its own heading. .cred-row is used
+   TWICE, employment and model-evaluation work, which never share a row. */
+.tier, .cred-row { padding-top: var(--s5); border-top: var(--hair-2); }
+.tier { margin-top: var(--s8); }
+.plist, .cred-list { margin-top: var(--s5); }
+.p-item, .cred-list li { padding-block: var(--s5); }
+.p-anchor { overflow-wrap: anywhere; } /* X3: no URL widens the page */
+
+/* D2, D3, V2: live demo, public repo, and the warning that a demo opens a
+   login. .proj-link at chip size, so B2 holds and the state is the border
+   and the word, never a second colour. */
+.badge-live, .badge-repo, .badge-auth { min-height: 24px; /* G6 */
+  margin-top: 0; padding: var(--s1) var(--s3); font-size: var(--fs-nano); }
+.badge-live { border-color: var(--accent-line); }
+.badge-auth { color: var(--text-3); border-style: dashed; }
+
 /* 16. REDUCED MOTION - A3; v2.js stops the canvas loop. */
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 1ms !important; animation-delay: 0ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 1ms !important; transition-delay: 0ms !important;
-    scroll-behavior: auto !important;
-  }
+    animation-iteration-count: 1 !important; scroll-behavior: auto !important;
+    transition-duration: 1ms !important; transition-delay: 0ms !important; }
   /* Scroll-driven animation ignores animation-duration. */
   .narr-w { animation: none !important; }
 }
@@ -558,12 +548,11 @@ strong, b { color: var(--text-1); font-weight: 600; }
 /* 17. FORCED COLORS - B6. Hairlines live, ornament goes. */
 
 @media (forced-colors: active) {
-  .topbar, .cap-list, .facts, .fact, .proj, .term, .term-head,
-  .hero-meta, .foot { border-color: CanvasText; }
-  .cap-list, .facts { background: Canvas; gap: 0; }
-  .cap, .fact { border: 1px solid CanvasText; }
-  .proj-shot { border-color: CanvasText; }
-  .tech, .proj-link, .skip { border-color: ButtonBorder; color: ButtonText; }
+  /* border-color is forced by the UA; only absent borders need adding. */
+  .cap-list, .plist, .cred-list, .facts, .grid-m { background: Canvas; gap: 0; }
+  .cap, .p-item, .cred-list li, .fact, .m-cell { border: 1px solid CanvasText; }
+  .tech, .cap-chip, .proj-link, .badge-live, .badge-repo, .badge-auth,
+  .skip { border-color: ButtonBorder; color: ButtonText; }
   .hero-lane, .ground, .loader-fig { display: none; } /* ornament (E4, L9) */
   .loader { background: Canvas; }
   .loader-label { color: CanvasText; }
@@ -581,8 +570,8 @@ strong, b { color: var(--text-1); font-weight: 600; }
 
 @media (prefers-contrast: more) {
   :root {
-    --text-2:  #D8DDE3; /* 14.32 base, 13.51 surf */
-    --text-3:  #C6CDD5; /* 12.20 base, 11.51 surf */
+    --text-2:  #D8DDE3; /* 14.32, 13.51 */
+    --text-3:  #C6CDD5; /* 12.20, 11.51 */
     --edge:    rgba(255,255,255,.28); /* 2.43 */
     --edge-2:  rgba(255,255,255,.38); /* 3.53 */
     --edge-ui: rgba(255,255,255,.46); /* 4.67 */
@@ -590,7 +579,7 @@ strong, b { color: var(--text-1); font-weight: 600; }
   }
   .topbar { background: var(--base); backdrop-filter: none; }
   .hero { background: none; }
-  .term { --term-dim: #C2CCD4; } /* 11.32 on --term-bg */
+  .term { --term-dim: #C2CCD4; } /* 11.32 */
 }
 
 /* 19. PRINT - ratios restated on white. */
@@ -608,18 +597,19 @@ strong, b { color: var(--text-1); font-weight: 600; }
   .hero { min-height: 0; padding-block: 0 var(--s6); background: none; }
   .hero-title { font-size: 34pt; line-height: 1; }
   .hero-portrait, .hero-pic { max-width: 150px; }
-  .band, .closer { padding-block: var(--s6); break-inside: avoid; }
-  .proj, .cap, .fact, .term, .facts { break-inside: avoid; box-shadow: none; }
-  .proj-media { position: static; }
+  .band, .closer, .narr-sticky { padding-block: var(--s6); }
+  .band, .closer, .proj, .cap, .fact, .m-cell, .p-item, .tier, .term, .facts,
+  .grid-m { break-inside: avoid; } /* --shadow is none already */
+  .proj-media, .narr-sticky { position: static; }
   .narr { height: auto; border-bottom: 0; }
-  .narr-sticky { position: static; min-height: 0; padding-block: var(--s6); }
+  .narr-sticky { min-height: 0; }
   .narr-line { max-width: none; font-size: 15pt; }
-  .narr-w { animation: none !important; opacity: 1; color: var(--text-1); }
+  .narr-w { color: var(--text-1); }
   .term { --term-head: #F2F4F5; --term-rule: #C6CCD2; --term-fg: #101214;
     --term-dim: #4E575F; --pass: #0F6340; --fail: #99291A; } /* 7.29, 7.82 */
-  .term-head { color: #3A424A; } /* 9.25 on --term-head */
-  .term .w { color: #101214; } /* white would vanish on paper */
+  .term-head { color: #3A424A; } /* 9.25 on head */
+  .term .w { color: #101214; } /* white vanishes on paper */
   .term-body { white-space: pre-wrap; overflow: visible; }
-  .foot-links a[href]::after { content: " (" attr(href) ")"; font-size: 8pt; }
-  .reveal { animation: none !important; opacity: 1; transform: none; }
+  .narr-w, .reveal { animation: none !important; opacity: 1; }
+  .reveal { transform: none; }
 }

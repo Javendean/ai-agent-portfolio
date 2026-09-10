@@ -1,0 +1,14 @@
+# Byte budgets in the rubric are measured on the shipped bytes, and core.autocrlf
+# is true on the build machine. Without this, a fresh checkout rewrites v2.css to
+# 25,140 B (cap 24,576) and v2.js to 14,915 B (cap 14,592) purely from line endings,
+# and both budgets read as failing on a tree nobody edited. Pin the shipped text to LF.
+* text=auto eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.html text eol=lf
+*.svg text eol=lf
+*.md text eol=lf
+*.pdf binary
+*.png binary
+*.jpg binary
+*.webp binary
