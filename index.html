@@ -2,96 +2,227 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
 <meta name="robots" content="index, follow">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="color-scheme" content="light">
-<title>Javendean Naipaul &middot; analyst and engineer</title>
-<meta name="description" content="Javendean Naipaul builds systems that decide when a model's output is trustworthy enough to write into a system of record. Three case studies, each shipping the check that proves it.">
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+
+<title>Javendean Naipaul · Verification systems for data and model output</title>
+<meta name="description" content="I build systems that decide whether output is trustworthy enough to write into a system of record. Three of them, each shipping the check that proves it: TIE-OUT, Verity, LCC.">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="v2.css">
+
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Javendean Naipaul">
-<meta property="og:title" content="Javendean Naipaul">
-<meta property="og:description" content="Analyst and engineer. Systems that decide when a model's output is trustworthy enough to write into a system of record.">
+<meta property="og:title" content="Javendean Naipaul · Verification systems for data and model output">
+<meta property="og:description" content="I build systems that decide whether output is trustworthy enough to write into a system of record. One of them caught a mapping error that left the entity tying to the cent and gross profit off by $309,245.88.">
+<!-- Relative, and no og:url: the deployed origin is not a fact in FACTS.md, and
+     an absolute guess 404s the card from any other path or custom domain. -->
+<meta property="og:image" content="img/avatar.jpg">
+<meta property="og:image:width" content="640">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Javendean Naipaul, in a blue shirt and patterned tie, wearing glasses, smiling at the camera.">
 <meta name="twitter:card" content="summary">
 </head>
 <body>
 
-<main class="sheet">
+<!-- G2: first in tab order, before the header. -->
+<a class="skip" href="#main">Skip to content</a>
 
-  <nav class="sitenav" aria-label="Main">
-    <a href="./" aria-current="page">Javendean Naipaul</a>
-    <span>
-      <a href="work/tie-out/">TIE-OUT</a>
-      <a href="work/verity/">Verity</a>
-      <a href="work/lcc/">LCC</a>
-      <a href="about/">About</a>
-    </span>
+<header class="topbar">
+  <a class="brand" href="./" aria-current="page">Javendean Naipaul</a>
+  <nav class="topnav" aria-label="Primary">
+    <a href="#work">Work</a>
+    <a href="about/">About</a>
+    <a href="#contact">Contact</a>
   </nav>
+</header>
 
-  <header>
-    <h1>Javendean Naipaul</h1>
-    <p class="role">Analyst and engineer. I build the systems that decide when a model's output is
-    trustworthy enough to write into a system of record.</p>
-  </header>
+<main id="main" tabindex="-1">
 
-  <p class="lede">Three of them are below. The inputs are an acquired company's chart of accounts, a
-  sales rep's freehand note and a public intake form, each of them untrusted and each having to land
-  somewhere permanent without corrupting it. Each system ships <b>the check that proves the boundary
-  holds</b>, and the check is code you can run, not a claim on a slide.</p>
+  <!-- HERO ================================================================ -->
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="shell">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p class="hero-eyebrow">Verification systems · Queens, NY</p>
 
-  <section>
-  <h2>Work</h2>
+          <h1 class="hero-title" id="hero-h">I build the <em>check</em>.</h1>
 
-  <div class="cards cards--3">
+          <!-- The two-tone move: the vocabulary sits at --text-2 and recedes,
+               the sentence that explains it sits at --text-1 and carries. -->
+          <p class="hero-intro">Record linkage, schema contracts, row level authorisation.
+          <b>All of it does one job: decide whether output is trustworthy enough to write
+          into a system of record.</b></p>
 
-    <div class="card">
-      <h3><a href="work/tie-out/">TIE-OUT</a></h3>
-      <p>Maps an acquired company's chart of accounts onto the group chart, and refuses to publish a
-      close pack it cannot stand behind.</p>
-      <p class="stack">Python &middot; DuckDB &middot; dbt &middot; Fellegi-Sunter record linkage
-      &middot; 124 tests in 47.95s</p>
-      <p>Its evaluation harness argues against its own numbers: name similarity is barred from
-      choosing a destination at <b>58.8%</b> top-1, and the flattering agreement-with-key figure is
-      printed under the word <b>CIRCULAR</b>.</p>
+          <!-- J2: the evidence gets its own line at display weight instead of
+               being the tail of a paragraph. E4: the second sentence is the text
+               alternative for the figure in the lane, and it stays true whether
+               or not the figure paints. -->
+          <p class="hero-figure">
+            <b class="hero-figure-n">$309,245.88</b>
+            <span class="hero-figure-l">Gross profit error the subtotal oracle caught while
+            the entity still tied to the cent. Two account charts, one mapping landing on
+            the wrong account.</span>
+          </p>
+
+          <ul class="hero-meta">
+            <li>Quantitative analyst, Outlier AI</li>
+            <li><a href="files/CapitalOne_JavendeanNaipaul_Resume.pdf">Résumé, PDF</a></li>
+          </ul>
+        </div>
+
+        <!-- E1: the ornament gets a grid column of its own, so no stroke can
+             ever land in a text element's box (B4) or behind the portrait (E2).
+             E3: the SVG is the render(0) pose, drawn from the same model, the
+             same projection and the same alphas as v2.js. It is what a reader
+             with JavaScript off sees; v2.js removes it once the canvas is sized. -->
+        <div class="hero-lane">
+          <canvas class="hero-canvas" aria-hidden="true"></canvas>
+          <svg class="hero-still" viewBox="0 0 290 360" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false" fill="none" stroke-width="1">
+            <path d="M76 1.4L48.2 94.5M48.2 94.5L30.6 297.4M30.6 297.4L54.5 320.5M54.5 320.5L76 1.4M260.6 61.4L182.5 121.8M182.5 121.8L188 291.5M188 291.5L286.5 305M286.5 305L260.6 61.4" stroke="#8E97A1" stroke-opacity=".14"/>
+            <path d="M67 54.6L244.8 100.3" stroke="#8E97A1" stroke-opacity=".20"/>
+            <path d="M57 84.8L216.1 119.4" stroke="#8E97A1" stroke-opacity=".15"/>
+            <path d="M49.5 107.4L193.4 134.5" stroke="#8E97A1" stroke-opacity=".12"/>
+            <path d="M62.4 117.4L249.3 150.9" stroke="#8E97A1" stroke-opacity=".22"/>
+            <path d="M52.6 139.6L249.3 150.9" stroke="#8E97A1" stroke-opacity=".19"/>
+            <path d="M45.4 156L195.1 175.5" stroke="#8E97A1" stroke-opacity=".13"/>
+            <path d="M57.3 187.9L254.3 206.3" stroke="#8E97A1" stroke-opacity=".24"/>
+            <path d="M40.9 209L197 219.4" stroke="#8E97A1" stroke-opacity=".14"/>
+            <path d="M51.5 267.8L225.3 266.8" stroke="#8E97A1" stroke-opacity=".24"/>
+            <path d="M42.5 267.3L225.3 266.8" stroke="#8E97A1" stroke-opacity=".20"/>
+            <path d="M36 267L198.9 266.6" stroke="#8E97A1" stroke-opacity=".15"/>
+            <rect x="65.1" y="52.8" width="3.7" height="3.7" fill="#8E97A1" fill-opacity=".47"/>
+            <rect x="55.4" y="83.2" width="3.2" height="3.2" fill="#8E97A1" fill-opacity=".37"/>
+            <rect x="48.1" y="106.1" width="2.7" height="2.7" fill="#8E97A1" fill-opacity=".29"/>
+            <rect x="60.5" y="115.4" width="3.9" height="3.9" fill="#8E97A1" fill-opacity=".50"/>
+            <rect x="50.9" y="138" width="3.3" height="3.3" fill="#8E97A1" fill-opacity=".40"/>
+            <rect x="43.9" y="154.6" width="2.9" height="2.9" fill="#8E97A1" fill-opacity=".32"/>
+            <rect x="55.2" y="185.8" width="4.2" height="4.2" fill="#8E97A1" fill-opacity=".55"/>
+            <rect x="46" y="198.4" width="3.5" height="3.5" fill="#8E97A1" fill-opacity=".43"/>
+            <rect x="39.4" y="207.5" width="3" height="3" fill="#8E97A1" fill-opacity=".34"/>
+            <rect x="49.3" y="265.5" width="4.5" height="4.5" fill="#8E97A1" fill-opacity=".60"/>
+            <rect x="40.6" y="265.5" width="3.7" height="3.7" fill="#8E97A1" fill-opacity=".46"/>
+            <rect x="34.4" y="265.4" width="3.1" height="3.1" fill="#8E97A1" fill-opacity=".37"/>
+            <rect x="243.4" y="98.9" width="2.9" height="2.9" fill="#8E97A1" fill-opacity=".32"/>
+            <rect x="214.9" y="118.2" width="2.5" height="2.5" fill="#8E97A1" fill-opacity=".25"/>
+            <rect x="192.3" y="133.4" width="2.2" height="2.2" fill="#8E97A1" fill-opacity=".21"/>
+            <rect x="247.8" y="149.4" width="3" height="3" fill="#8E97A1" fill-opacity=".34"/>
+            <rect x="217.7" y="163.4" width="2.6" height="2.6" fill="#8E97A1" fill-opacity=".27"/>
+            <rect x="194" y="174.3" width="2.3" height="2.3" fill="#8E97A1" fill-opacity=".22"/>
+            <rect x="252.7" y="204.7" width="3.2" height="3.2" fill="#8E97A1" fill-opacity=".37"/>
+            <rect x="220.6" y="212.3" width="2.7" height="2.7" fill="#8E97A1" fill-opacity=".29"/>
+            <rect x="195.8" y="218.2" width="2.4" height="2.4" fill="#8E97A1" fill-opacity=".24"/>
+            <rect x="258" y="265.4" width="3.3" height="3.3" fill="#8E97A1" fill-opacity=".40"/>
+            <rect x="223.9" y="265.4" width="2.9" height="2.9" fill="#8E97A1" fill-opacity=".32"/>
+            <rect x="197.7" y="265.4" width="2.5" height="2.5" fill="#8E97A1" fill-opacity=".25"/>
+            <path d="M47.8 200.2L216.1 119.4" stroke="#5CC8E6" stroke-width="1.4" stroke-opacity=".50"/>
+            <rect x="45.4" y="197.8" width="4.7" height="4.7" fill="#5CC8E6" fill-opacity=".50"/>
+            <rect x="214.3" y="117.6" width="3.7" height="3.7" fill="#5CC8E6" fill-opacity=".50"/>
+            <rect x="218.2" y="209.8" width="7.7" height="7.7" stroke="#5CC8E6" stroke-opacity=".24"/>
+          </svg>
+        </div>
+
+        <img class="hero-portrait" src="img/portrait.jpg" width="1200" height="1500"
+             alt="Javendean Naipaul: a man in a blue shirt and patterned tie, wearing glasses, smiling directly at the camera against a plain warm grey wall."
+             fetchpriority="high" decoding="async">
+      </div>
     </div>
 
-    <div class="card">
-      <h3><a href="work/verity/">Verity</a></h3>
-      <p>Turns unstructured sales notes into schema-validated CRM records. Failures become specific
-      repair instructions and a bounded retry, never a silent success.</p>
-      <p class="stack">Python 3.12 &middot; FastAPI &middot; Pydantic 2 &middot; Docker &middot;
-      Kubernetes &middot; HubSpot API v3 &middot; 82 tests in 0.54s</p>
-      <p>On messy input, every working model in a six-model benchmark scored
-      <span class="zero">0%</span> first-attempt and <span class="hundred">100%</span> final. That
-      gap is what the correction loop buys.</p>
-    </div>
-
-    <div class="card">
-      <h3><a href="work/lcc/">LCC</a></h3>
-      <p>Bilingual member messaging and contact management, live in production and auth-gated.
-      Authorisation lives in the database, not in route guards.</p>
-      <p class="stack">SvelteKit &middot; Supabase/Postgres &middot; Vercel &middot; Twilio
-      &middot; 587 lines of SQL across 9 migrations</p>
-      <p><b>18 row-level-security policies</b> on 7 tables. The same message is 1 SMS segment in
-      English and <b>3 in Spanish</b>: accents and <code>&iquest;</code>/<code>&iexcl;</code> force
-      UCS-2, cutting the segment budget from 153 characters to 67.</p>
-    </div>
-
-  </div>
+    <a class="scrollcue" href="#work">Selected work</a>
   </section>
 
-  <section>
-  <h2>Selected evidence</h2>
+  <!-- WHAT I DO ============================================================ -->
+  <section class="band reveal" aria-labelledby="do-h">
+    <div class="shell">
+      <p class="band-label">What I do</p>
+      <h2 class="band-title" id="do-h">A check that cannot be shown to fire is not evidence.</h2>
+      <p class="lede">So I write the check first, then I plant the error it is supposed to
+      catch and make it prove it caught it. Three habits do most of the work.</p>
 
-  <p>The claim worth disproving: <em>if every source dollar lands in the group and nothing crossed
-  the ledger, the mapping is correct.</em> TIE-OUT ships the disproof as a passing test, not a
-  paragraph.</p>
+      <!-- J3: these hold the principle only. Every number and every mechanism
+           lives once, in the project it belongs to, further down. -->
+      <div class="cap-list">
+        <div class="cap">
+          <h3 class="cap-h">Independent oracles</h3>
+          <p class="cap-p">A check is worth something only when its input cannot be
+          influenced by the thing it checks. If the checker and the checked read the same
+          source, their agreeing tells you nothing you did not already assume.</p>
+        </div>
 
-  <figure class="ev">
-      <div class="term">
-        <div class="term-bar"><span class="term-title">python scripts/prove_tests_fire.py</span></div>
-<pre tabindex="0" role="region" aria-label="Terminal output: python scripts/prove_tests_fire.py, scrollable"><span class="dim">Injecting a permutation: E1 5000 'COGS - Materials' -&gt; G-6100 'Rent and Occupancy'.</span>
+        <div class="cap">
+          <h3 class="cap-h">Typed contracts, bounded repair</h3>
+          <p class="cap-p">A validation failure is more useful as an instruction than as an
+          exception. Turn each one into the specific repair it asks for, bound the retries,
+          and let whatever comes out carry its own error flags.</p>
+        </div>
+
+        <div class="cap">
+          <h3 class="cap-h">Authorisation in the database</h3>
+          <p class="cap-p">Rules that live in route guards get a second copy the moment a
+          second entry point appears. Public intake forms should write to the same tables
+          the admin app reads, under the same policies, or the two will drift.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTED WORK ======================================================= -->
+  <section class="band" id="work" aria-labelledby="work-h">
+    <div class="shell">
+      <p class="band-label">Selected work</p>
+      <h2 class="band-title" id="work-h">Three systems. Each one ships the check that proves it.</h2>
+      <p class="lede">All three repositories are private, so what I can show is the output:
+      a planted error getting caught, a real correction loop, a live cost finding. Each
+      case study goes deeper than this page does.</p>
+
+      <div class="work">
+
+        <!-- 01 TIE-OUT -->
+        <article class="proj reveal" aria-labelledby="p1-h">
+          <div>
+            <p class="proj-idx">01</p>
+            <div class="proj-top">
+              <h3 class="proj-name" id="p1-h">TIE-OUT</h3>
+              <p class="proj-tag">Chart of accounts mapping for roll ups</p>
+            </div>
+
+            <p class="proj-lead">It caught a mapping error that left the entity tying to
+            the cent and gross profit off by $309,245.88.</p>
+
+            <div class="proj-body">
+              <p>About 3,200 lines of Python over DuckDB and dbt. It maps an acquired
+              company's chart of accounts onto the group chart and refuses to publish a
+              close pack it cannot stand behind. 124 tests passing in 47.95s, run
+              2026-09-09.</p>
+
+              <p>The hard part is that the dangerous error is arithmetically perfect.
+              The disproof script plants COGS - Materials into Rent and Occupancy. Both
+              accounts are debit normal and the row is assigned exactly once, so
+              conservation and sign preservation pass, correctly. Only the subtotal oracle
+              fails, because it reads something the mapper never sees. That is an
+              independent oracle, not a tighter tolerance.</p>
+
+              <p>The harness argues against its own numbers. Name similarity ranks at
+              0.727 AUC but scores 30/51 = 58.8% top 1, and 8 of the 21 errors cross the
+              balance sheet and P&amp;L line, so the feature is barred from proposing a
+              destination.</p>
+            </div>
+
+            <ul class="proj-tech">
+              <li class="tech">Python</li>
+              <li class="tech">DuckDB</li>
+              <li class="tech">dbt</li>
+              <li class="tech">Fellegi-Sunter linkage</li>
+            </ul>
+
+            <a class="proj-link" href="work/tie-out/">TIE-OUT case study</a>
+          </div>
+
+          <div class="proj-media">
+            <div class="term">
+              <div class="term-head">python scripts/prove_tests_fire.py  (excerpt)</div>
+<pre class="term-body" tabindex="0" role="region" aria-label="Terminal output from the TIE-OUT disproof script, horizontally scrollable"><span class="dim">Injecting a permutation: E1 5000 'COGS - Materials' -&gt; G-6100 'Rent and Occupancy'.</span>
 
 <span class="w">3. THE DISPROOF -- an arithmetically perfect, semantically wrong mapping</span>
   <span class="dim">expected: conservation PASSES, sign preservation PASSES, and ONLY the oracle fails.</span>
@@ -100,52 +231,204 @@
   <span class="g">OK</span>  assert_sign_preservation                        want <span class="g">PASS</span>   got <span class="g">PASS</span>
   <span class="g">OK</span>  assert_subtotal_oracle                          want <span class="r">FAIL</span>   got <span class="r">FAIL</span>
 
-  <span class="y">what the oracle saw, and nothing else could:</span>
+  <span class="dim">what the oracle saw, and nothing else could:</span>
       E1 2026-05 gross_profit: off by <span class="r">-309,245.88</span>
       E1 2026-06 gross_profit: off by <span class="r">-323,912.13</span>
       E1 2026-07 gross_profit: off by <span class="r">-206,319.81</span></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 Verity -->
+        <article class="proj reveal" aria-labelledby="p2-h">
+          <div>
+            <p class="proj-idx">02</p>
+            <div class="proj-top">
+              <h3 class="proj-name" id="p2-h">Verity</h3>
+              <p class="proj-tag">CRM intake that will not fail silently</p>
+            </div>
+
+            <p class="proj-lead">On messy input every working model scored 0% first attempt
+            and 100% final. Six models, nine trials each.</p>
+
+            <div class="proj-body">
+              <p>It turns unstructured sales notes into schema validated CRM records.
+              FastAPI, Pydantic 2, 82 tests passing in 0.54s, run 2026-09-09. The provider
+              layer registers models behind one interface and fails over automatically on
+              rate limit errors, tracking cost per token. The repo is
+              emet-crm-pipeline-demo, so the full capture on the case study is headed Emet
+              CRM Pipeline rather than Verity.</p>
+
+              <p>The hard part is what happens on exhaustion. The captured run took 2
+              attempts and 8,450 ms and returned partial_success. Attempt 1 rejected
+              'jenny at meridian something dot com', an amount that was not a number, the
+              stage 'early discussions' and the date 'end of Q2'. Attempt 2 set the email
+              to null, resolved the date to 2026-06-30, and converted 'forty, forty-five K'
+              to a midpoint of 42500.0 marked as an estimate. Four fields were flagged for
+              human review.</p>
+
+              <p>The gap between 0% and 100% is exactly what the correction loop buys. The
+              cheapest working model matched one costing about 5.9 times as much.</p>
+            </div>
+
+            <ul class="proj-tech">
+              <li class="tech">Python 3.12</li>
+              <li class="tech">FastAPI</li>
+              <li class="tech">Pydantic 2</li>
+              <li class="tech">Docker</li>
+              <li class="tech">Kubernetes</li>
+              <li class="tech">HubSpot API v3</li>
+            </ul>
+
+            <a class="proj-link" href="work/verity/">Verity case study</a>
+          </div>
+
+          <!-- J1/J4: two crops of one capture, at the size their source
+               supports, instead of a whole browser window scaled to 0.53. The
+               full capture is on the case study, which has the column for it. -->
+          <div class="proj-media">
+            <img class="proj-shot" src="img/verity-run-banner.png" width="870" height="72"
+                 alt="The run summary bar from the Verity interface, reading Partial Success, Attempts 2 of 2, Duration 8.4s."
+                 loading="lazy" decoding="async">
+            <img class="proj-shot" src="img/verity-audit-trail.png" width="870" height="795"
+                 alt="The audit trail from the same run. Attempt 1 lists five validation errors, each naming its field: contact.email, deal.amount, deal.stage, deal.expected_close_date and company.industry. Attempt 2 lists the five corrections applied. Below them, a Fields Flagged for Human Review panel lists four."
+                 loading="lazy" decoding="async">
+          </div>
+        </article>
+
+        <!-- 03 LCC -->
+        <article class="proj reveal" aria-labelledby="p3-h">
+          <div>
+            <p class="proj-idx">03</p>
+            <div class="proj-top">
+              <h3 class="proj-name" id="p3-h">LCC Management System</h3>
+              <p class="proj-tag">Bilingual member messaging, in production</p>
+            </div>
+
+            <p class="proj-lead">18 row level security policies. Authorisation lives in the
+            database, not in route guards.</p>
+
+            <div class="proj-body">
+              <p>A SvelteKit and Supabase app that about 10 administrators use to reach 450
+              contacts, 0 of whom have opted out. 587 lines of SQL across 9 migrations: 18
+              policies, 7 tables, 11 indexes, RLS enabled on 7 tables.</p>
+
+              <p>The hard part is consent that survives. Opt out rows are never deleted.
+              Re-subscribing sets resubscribed_at, so the original opt out timestamp
+              survives, which is the value a regulator asks for, and the TCPA statute of
+              limitations is 4 years. Every send path filters on resubscribed_at IS
+              NULL.</p>
+
+              <p>Then a cost finding, measured live on 2026-09-09. The same message is 1
+              segment and 116 characters in English and 3 segments and 169 characters in
+              Spanish, because accents and ¿ force UTF16 and cut the segment budget from
+              153 characters to 67. One live template was doing it. I fixed it and locked
+              it behind a test that asserts a segment budget per template.</p>
+
+              <p>The $7.66 below is the cost that gets avoided, not a bill I paid. A
+              separate path mints a single-use, time limited batch URL of 32 bytes from
+              crypto.getRandomValues, marks the row used_at on first fetch so it cannot be
+              replayed, and hands over a QR code. An iPhone Shortcut fetches the
+              precomputed send list and dispatches from my own phone for $0, through the
+              same recipient resolution and consent gates as the server send path.
+              Compliance is not what gets skipped to save the money.</p>
+            </div>
+
+            <ul class="proj-tech">
+              <li class="tech">SvelteKit</li>
+              <li class="tech">Supabase</li>
+              <li class="tech">Postgres RLS</li>
+              <li class="tech">Vercel</li>
+              <li class="tech">Twilio</li>
+            </ul>
+
+            <a class="proj-link" href="work/lcc/">LCC case study</a>
+          </div>
+
+          <!-- J6: the claim is a comparison, so both sides are shown. Crops of
+               the two live captures, not the whole window: the encoding chip is
+               the only part of either screen that carries the argument. -->
+          <div class="proj-media">
+            <img class="proj-shot" src="img/lcc-segments-en.png" width="740" height="50"
+                 alt="The encoding readout above the LCC compose box with the English message loaded: 1 segment, 116 chars, GSM_7BIT_EXT."
+                 loading="lazy" decoding="async">
+            <img class="proj-shot" src="img/lcc-segments-es.png" width="740" height="50"
+                 alt="The same readout with the Spanish message loaded: 3 segments, 169 chars, UTF16."
+                 loading="lazy" decoding="async">
+            <img class="proj-shot" src="img/lcc-cost-es.png" width="740" height="180"
+                 alt="The send panel under the Spanish message: estimated reach about 323 recipients, estimated cost $7.66, and the three dispatch buttons, one of which is Send via iPhone Shortcut."
+                 loading="lazy" decoding="async">
+          </div>
+        </article>
+
       </div>
-      <figcaption class="cap cap--claim">Both accounts are debit-normal and the row is assigned
-        exactly once, so the entity still ties to the cent. Gross profit for 2026-05 is wrong by
-        <span class="bignum">$309,245.88</span></figcaption>
-  </figure>
-
-  <p>Only the subtotal oracle catches it, because it compares reconstructed captions against
-  subtotals <b>the entity itself published from its own chart</b>, a classification made before any
-  group chart existed, which the mapper never reads. That is an independent oracle, not a tighter
-  tolerance. The harness, the design decisions and the limits are in the
-  <a href="work/tie-out/">TIE-OUT case study</a>.</p>
-
-  </section>
-
-  <section>
-  <h2>Background</h2>
-
-  <p>Technical business analyst at Morgan Stanley in Manhattan, September 2022 to June 2024:
-  partnered with the COO, built 5+ trillion row dataset infrastructure on Azure, put PII access
-  control in place for 300K+ clients, and delivered 100% audit-ready data lineage. Since June 2024,
-  quantitative analyst
-  at Outlier AI, where I have diagnosed 250+ model reasoning errors and delivered 120+ GenAI and
-  LLM solutions for enterprise leaders. MS Risk Management (Actuarial Sciences) from CUNY Queens
-  College, GPA 3.83, with a graduate capstone on <em>VaR-based CLO &amp; ABS Portfolio Solvency
-  Optimization</em>. The longer version, including the risk and actuarial work, is on the
-  <a href="about/">About</a> page.</p>
-
-  </section>
-
-  <footer>
-    <div class="meta">
-      <span><b>Email</b><a href="mailto:javendeannaipaul@gmail.com">javendeannaipaul@gmail.com</a></span>
-      <span><b>LinkedIn</b><a href="https://www.linkedin.com/in/javendean-naipaul-229b11169/">javendean-naipaul</a></span>
-      <span><b>GitHub</b><a href="https://github.com/Javendean">github.com/Javendean</a></span>
-      <span><b>R&eacute;sum&eacute;</b><a href="files/CapitalOne_JavendeanNaipaul_Resume.pdf">PDF</a></span>
     </div>
-    <p>Every figure and terminal capture on this site was produced by running the code. Test counts,
-    timings and the bilingual segment measurement were recorded on 2026-09-09; the six-model
-    benchmark was run on 2026-03-01. TIE-OUT, Verity and the LCC platform are private repositories,
-    available for live walkthrough. Based in Queens, NY.</p>
-  </footer>
+  </section>
+
+  <!-- VERIFIED FACTS ======================================================= -->
+  <section class="band" aria-labelledby="facts-h">
+    <div class="shell">
+      <p class="band-label">Verified facts</p>
+      <h2 class="band-title" id="facts-h">Five numbers the systems report about themselves.</h2>
+      <p class="lede">None of these is on the page above, and one of them is a system
+      refusing to let me quote it. Run dates are given because a number without one is a
+      claim. The case studies carry the output each was read from.</p>
+
+      <ul class="facts reveal">
+        <li class="fact">
+          <span class="fact-n">0 wrong</span>
+          <span class="fact-l">Held out vocabulary: 8 accounts renamed to synonyms the
+          rules do not cover. The harness stayed silent on all 8 and was confidently wrong
+          on none. TIE-OUT.</span>
+        </li>
+        <li class="fact">
+          <span class="fact-n">CIRCULAR</span>
+          <span class="fact-l">The harness's own label for its 23/23, 14/14 and 17/17
+          agreement with the answer key. It bars the figure from being quoted as
+          accuracy. TIE-OUT.</span>
+        </li>
+        <li class="fact">
+          <span class="fact-n">$0.000365</span>
+          <span class="fact-l">Cost per successful extraction on the cheapest model that
+          worked, llama4-scout. Six models, run 2026-03-01. Verity.</span>
+        </li>
+        <li class="fact">
+          <span class="fact-n">32 bytes</span>
+          <span class="fact-l">The single use batch token, from crypto.getRandomValues. The
+          row is marked used_at on first fetch, so it cannot be replayed. LCC.</span>
+        </li>
+        <li class="fact">
+          <span class="fact-n">$7.66</span>
+          <span class="fact-l">Estimated cost of one Spanish message to 323 recipients at
+          0.0079 per segment, measured live 2026-09-09. The cost the Shortcut path avoids,
+          not a bill. LCC.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CLOSER =============================================================== -->
+  <section class="closer shell reveal" id="contact" aria-labelledby="contact-h">
+    <p class="band-label">Contact</p>
+    <h2 class="closer-q" id="contact-h">Tell me what your system is not allowed to get wrong.</h2>
+    <p class="lede">If you have a number that has to be right before it is published, send
+    me the failure you are worried about. I will tell you which check I would build first,
+    and how you would know it fired.</p>
+    <a class="closer-mail" href="mailto:javendeannaipaul@gmail.com">javendeannaipaul@gmail.com</a>
+  </section>
 
 </main>
+
+<footer class="foot shell">
+  <p>Javendean Naipaul · Queens, NY · (917) 547-9923</p>
+  <div class="foot-links">
+    <a href="about/">About</a>
+    <a href="https://www.linkedin.com/in/javendean-naipaul-229b11169/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/Javendean" target="_blank" rel="noopener">GitHub</a>
+    <a href="files/CapitalOne_JavendeanNaipaul_Resume.pdf">Résumé, PDF</a>
+  </div>
+</footer>
+
+<script src="v2.js" defer></script>
 </body>
 </html>
